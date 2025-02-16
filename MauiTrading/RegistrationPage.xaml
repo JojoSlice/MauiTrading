@@ -1,0 +1,107 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiTrading.RegistrationPage"
+             xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
+             x:DataType="viewmodel:RegistrationViewModel">
+   
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="GradientBrush"
+                             StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
+            <GradientStop Color="{StaticResource Secondary}" Offset="0.8"/>
+            <GradientStop Color="Transparent" Offset="0.01"/>
+        </LinearGradientBrush>
+
+    </ContentPage.Resources>
+
+    <Grid>
+        <Image Source="trade.png"
+                Aspect="Fill"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"/>
+        
+        <Grid Background ="{StaticResource GradientBrush}"/>
+       
+        <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, Auto, 50"
+            ColumnDefinitions=".40*, AUTO, .50*"
+            Padding="10"
+            RowSpacing="10"
+            ColumnSpacing="10">
+
+            <BoxView Color="Black"
+                   Opacity="0.1"
+                     Grid.Row="1"
+                   Grid.RowSpan="6"
+                   Grid.Column="0"/>
+
+            <Label Text="Must be 5 to 20 characters long.&#10;No spaces or special characters (except _)."
+                  TextColor="Gray"     
+                  FontSize="8"
+                  Grid.Row="1"
+                   Padding="2"/>
+
+
+            <Entry Placeholder="Username"
+           Text="{Binding Username}"
+           Grid.Row="1"
+           Grid.Column="1"
+           Grid.ColumnSpan="2"/>
+
+            <Label Text="Should contain first name and last name.&#10;First letter of each name should be capitalized."
+                   TextColor="Gray"
+                   FontSize="8"
+                   Grid.Row="2"
+                   Padding="2"/>
+
+            <Entry Placeholder="Name"
+           Text="{Binding Name}"
+           Grid.Row="2"
+           Grid.Column="1"
+           Grid.ColumnSpan="2"/>
+
+            <Label Text="Must be at least 8 characters long.&#10;Must contain at least one uppercase, lowercase, number and special character.&#10;No spaces allowed."
+                   TextColor="Gray"
+                   FontSize="8"
+                   Grid.Row="3"
+                   Grid.RowSpan="2"
+                   Padding="2"/>
+
+            <Entry Placeholder="Password"
+           Text="{Binding Password}"
+           IsPassword="True"
+           Grid.Row="3"
+           Grid.Column="1"
+           Grid.ColumnSpan="2"/>
+
+            <Entry Placeholder="Repeat Password"
+           Text="{Binding RepeatPassword}"
+           IsPassword="True"
+           Grid.Row="4"
+           Grid.Column="1"
+           Grid.ColumnSpan="2"/>
+
+            <Button Text="Confirm"
+                Grid.Row="5"
+                Grid.Column="1"
+                Command="{Binding ConfirmCommand}"
+                BorderColor="Black"
+                BorderWidth="0.5">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                </Button.Shadow>
+            </Button>
+
+            <Button Text="Cancel"
+                Grid.Row="5"
+                Grid.Column="2"
+                Command="{Binding CancelCommand}"
+                BorderColor="Black"
+                BorderWidth="0.5">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                </Button.Shadow>
+            </Button>
+
+        </Grid>
+    </Grid>
+</ContentPage>

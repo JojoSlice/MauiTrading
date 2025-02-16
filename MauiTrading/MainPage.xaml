@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiTrading.MainPage"
+             xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
+             x:DataType="viewmodel:MainViewModel"
+             Title="">
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="GradientBrush"
+                             StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
+            <GradientStop Color="{StaticResource Secondary}" Offset="0.8"/>
+            <GradientStop Color="Transparent" Offset="0.01"/>
+        </LinearGradientBrush>
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <Image Source="trade.png"
+               Aspect="Fill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
+        
+        <Grid Background ="{StaticResource GradientBrush}"/>
+
+        <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, 50"
+          ColumnDefinitions=".25*, .50*, .25*"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10">
+
+            
+            <Entry Placeholder="Username:"
+               Text="{Binding Username}"
+               Grid.Column="1"
+               Grid.Row="1"/>
+
+            <Entry Placeholder="Password"
+               Text="{Binding Password}"
+               IsPassword="True"
+               Grid.Row="2"
+               Grid.Column="1"/>
+
+
+            <Button Text="Log in"
+                Command="{Binding LoginCommand}"
+                Grid.Row="3"
+                Grid.Column="1"
+                BorderColor="Black"
+                BorderWidth="0.5">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                </Button.Shadow>
+            </Button>
+
+            <Button Text="Register"
+                Command="{Binding RegisterCommand}"
+                Grid.Row="4"
+                Grid.Column="1"
+                BorderColor="Black"
+                BorderWidth="0.5">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                </Button.Shadow>
+            </Button>
+
+        </Grid>
+    </Grid>
+</ContentPage>
