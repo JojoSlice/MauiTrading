@@ -15,11 +15,6 @@
     </ContentPage.Resources>
 
     <Grid>
-        <Image Source="trade.png"
-                Aspect="Fill"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill"/>
-        
         <Grid Background ="{StaticResource GradientBrush}"/>
        
         <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, Auto, 50"
