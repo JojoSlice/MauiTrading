@@ -9,7 +9,7 @@
         <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
-            <GradientStop Color="{StaticResource Secondary}" Offset="0.8"/>
+            <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
             <GradientStop Color="Transparent" Offset="0.01"/>
         </LinearGradientBrush>
     </ContentPage.Resources>
@@ -24,14 +24,20 @@
           RowSpacing="10"
           ColumnSpacing="10">
 
-            
+            <Image Source="trade.png"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+
+
             <Entry Placeholder="Username:"
                Text="{Binding Username}"
+               TextColor="Black"
                Grid.Column="1"
                Grid.Row="1"/>
 
             <Entry Placeholder="Password"
                Text="{Binding Password}"
+               TextColor="Black"
                IsPassword="True"
                Grid.Row="2"
                Grid.Column="1"/>
@@ -44,7 +50,7 @@
                 BorderColor="{StaticResource PrimaryDark}"
                 BorderWidth="0.5">
                 <Button.Shadow>
-                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
                 </Button.Shadow>
             </Button>
 
@@ -55,7 +61,7 @@
                 BorderColor="{StaticResource PrimaryDark}"
                 BorderWidth="0.5">
                 <Button.Shadow>
-                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
                 </Button.Shadow>
             </Button>
 

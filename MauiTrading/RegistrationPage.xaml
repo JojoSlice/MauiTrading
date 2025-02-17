@@ -8,7 +8,7 @@
         <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
-            <GradientStop Color="{StaticResource Secondary}" Offset="0.8"/>
+            <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
             <GradientStop Color="Transparent" Offset="0.01"/>
         </LinearGradientBrush>
 
@@ -22,7 +22,8 @@
             Padding="10"
             RowSpacing="10"
             ColumnSpacing="10">
-
+            
+            
             <BoxView Color="White"
                    Opacity="0.1"
                      Grid.Row="1"
@@ -38,6 +39,7 @@
 
             <Entry Placeholder="Username"
            Text="{Binding Username}"
+           TextColor="Black"
            Grid.Row="1"
            Grid.Column="1"
            Grid.ColumnSpan="2"/>
@@ -50,6 +52,7 @@
 
             <Entry Placeholder="Name"
            Text="{Binding Name}"
+           TextColor="Black"
            Grid.Row="2"
            Grid.Column="1"
            Grid.ColumnSpan="2"/>
@@ -63,6 +66,7 @@
 
             <Entry Placeholder="Password"
            Text="{Binding Password}"
+           TextColor="Black"
            IsPassword="True"
            Grid.Row="3"
            Grid.Column="1"
@@ -70,6 +74,7 @@
 
             <Entry Placeholder="Repeat Password"
            Text="{Binding RepeatPassword}"
+           TextColor="Black"
            IsPassword="True"
            Grid.Row="4"
            Grid.Column="1"
