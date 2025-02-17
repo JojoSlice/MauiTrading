@@ -41,7 +41,7 @@
                 Command="{Binding LoginCommand}"
                 Grid.Row="3"
                 Grid.Column="1"
-                BorderColor="Black"
+                BorderColor="{StaticResource PrimaryDark}"
                 BorderWidth="0.5">
                 <Button.Shadow>
                     <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
@@ -52,7 +52,7 @@
                 Command="{Binding RegisterCommand}"
                 Grid.Row="4"
                 Grid.Column="1"
-                BorderColor="Black"
+                BorderColor="{StaticResource PrimaryDark}"
                 BorderWidth="0.5">
                 <Button.Shadow>
                     <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>

@@ -23,14 +23,14 @@
             RowSpacing="10"
             ColumnSpacing="10">
 
-            <BoxView Color="Black"
+            <BoxView Color="White"
                    Opacity="0.1"
                      Grid.Row="1"
                    Grid.RowSpan="6"
                    Grid.Column="0"/>
 
             <Label Text="Must be 5 to 20 characters long.&#10;No spaces or special characters (except _)."
-                  TextColor="Gray"     
+                  TextColor="Black"     
                   FontSize="8"
                   Grid.Row="1"
                    Padding="2"/>
@@ -43,7 +43,7 @@
            Grid.ColumnSpan="2"/>
 
             <Label Text="Should contain first name and last name.&#10;First letter of each name should be capitalized."
-                   TextColor="Gray"
+                   TextColor="Black"
                    FontSize="8"
                    Grid.Row="2"
                    Padding="2"/>
@@ -55,7 +55,7 @@
            Grid.ColumnSpan="2"/>
 
             <Label Text="Must be at least 8 characters long.&#10;Must contain at least one uppercase, lowercase, number and special character.&#10;No spaces allowed."
-                   TextColor="Gray"
+                   TextColor="Black"
                    FontSize="8"
                    Grid.Row="3"
                    Grid.RowSpan="2"
@@ -79,10 +79,10 @@
                 Grid.Row="5"
                 Grid.Column="1"
                 Command="{Binding ConfirmCommand}"
-                BorderColor="Black"
+                BorderColor="{StaticResource Secondary}"
                 BorderWidth="0.5">
                 <Button.Shadow>
-                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
                 </Button.Shadow>
             </Button>
 
@@ -90,10 +90,10 @@
                 Grid.Row="5"
                 Grid.Column="2"
                 Command="{Binding CancelCommand}"
-                BorderColor="Black"
+                BorderColor="{StaticResource Secondary}"
                 BorderWidth="0.5">
                 <Button.Shadow>
-                    <Shadow Brush="Black" Offset="5,5" Radius="20" Opacity="1"/>
+                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
                 </Button.Shadow>
             </Button>
 
