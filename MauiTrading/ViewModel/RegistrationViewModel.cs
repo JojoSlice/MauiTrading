@@ -74,7 +74,10 @@ namespace MauiTrading.ViewModel
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Failed to register", "OK");
+                if (respons.StatusCode == System.Net.HttpStatusCode.Conflict)
+                    await Application.Current.MainPage.DisplayAlert("Error", "Username already taken.", "OK");
+                else
+                    await Application.Current.MainPage.DisplayAlert("Error", "Failed to register", "OK");
             }
         }
 
