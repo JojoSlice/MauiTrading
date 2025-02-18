@@ -41,7 +41,13 @@ namespace MauiTrading.ViewModel
 
                 if (respons.IsSuccessStatusCode)
                 {
-                    await Shell.Current.DisplayAlert("Success", "Login successful", "OK");
+                    var responsBody = await respons.Content.ReadAsStringAsync();
+                    var responsObject = JsonSerializer.Deserialize<JsonElement>(responsBody);
+
+                    var token = responsObject.GetProperty("token").GetString();
+                    await JWT.Service.SaveTokenAsync(token);
+
+                    await Shell.Current.GoToAsync(nameof(HomePage));
                     return true;
                 }
                 else
