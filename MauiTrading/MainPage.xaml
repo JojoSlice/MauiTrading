@@ -17,17 +17,18 @@
     <Grid>
 
         <Grid Background ="{StaticResource GradientBrush}"/>
+        <Grid RowDefinitions="*, 350, 400"
+              ColumnDefinitions=".50*, 400, .50*">
+            <Image Source="trade.png"
+                   Grid.Row="1"
+                   Grid.Column="1"/>
+        </Grid>
 
         <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, 50"
           ColumnDefinitions=".25*, .50*, .25*"
           Padding="10"
           RowSpacing="10"
           ColumnSpacing="10">
-
-            <Image Source="trade.png"
-                   Grid.Column="1"
-                   Grid.Row="0"/>
-
 
             <Entry Placeholder="Username:"
                Text="{Binding Username}"

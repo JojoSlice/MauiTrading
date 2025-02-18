@@ -65,19 +65,30 @@ namespace MauiTrading.ViewModel
             var json = JsonSerializer.Serialize(newUser);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var respons = await _httpClient.PostAsync("https://localhost:7247/api/users", content);
-            if (respons.IsSuccessStatusCode)
+            try
             {
-                await Application.Current.MainPage.DisplayAlert("Success", "User registered", "OK");
+                var respons = await _httpClient.PostAsync("https://localhost:7247/api/users", content);
+                
+                if (respons == null)
+                    throw new Exception("Could not reach server, try again later.");
 
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                if (respons.StatusCode == System.Net.HttpStatusCode.Conflict)
-                    await Application.Current.MainPage.DisplayAlert("Error", "Username already taken.", "OK");
+                if (respons.IsSuccessStatusCode)
+                {
+                    await Shell.Current.DisplayAlert("Success", "User registered", "OK");
+
+                    await Shell.Current.GoToAsync("..");
+                }
                 else
-                    await Application.Current.MainPage.DisplayAlert("Error", "Failed to register", "OK");
+                {
+                    if (respons.StatusCode == System.Net.HttpStatusCode.Conflict)
+                        await Shell.Current.DisplayAlert("Error", "Username already taken.", "OK");
+                    else
+                        await Shell.Current.DisplayAlert("Error", "Failed to register", "OK");
+                }
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
             }
         }
 

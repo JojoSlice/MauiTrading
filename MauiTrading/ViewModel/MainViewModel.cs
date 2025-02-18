@@ -32,16 +32,29 @@ namespace MauiTrading.ViewModel
             var json = JsonSerializer.Serialize(loginData);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var respons = await _httpClient.PostAsync("https://localhost:7247/api/login", content);
-
-            if (respons.IsSuccessStatusCode)
+            try
             {
-                await Application.Current.MainPage.DisplayAlert("Success", "Login successful", "OK");
-                return true;
-            }
+                var respons = await _httpClient.PostAsync("https://localhost:7247/api/login", content);
 
-            await Application.Current.MainPage.DisplayAlert("Error", "Invalid username or password", "OK");
-            return false;
+                if (respons == null)
+                    throw new Exception("Could not reach server, try again later.");
+
+                if (respons.IsSuccessStatusCode)
+                {
+                    await Shell.Current.DisplayAlert("Success", "Login successful", "OK");
+                    return true;
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Error", "Invalid username or password", "OK");
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
+                return false;
+            }
         }
 
         [RelayCommand]

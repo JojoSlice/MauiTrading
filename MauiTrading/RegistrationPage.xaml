@@ -16,6 +16,13 @@
 
     <Grid>
         <Grid Background ="{StaticResource GradientBrush}"/>
+        <Grid RowDefinitions="*, 350, 400"
+              ColumnDefinitions=".50*, 400, .50*">
+            <Image Source="trade.png"
+                   Grid.Row="1"
+                   Grid.Column="1"/>
+        </Grid>
+        
        
         <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, Auto, 50"
             ColumnDefinitions=".40*, AUTO, .50*"
@@ -25,19 +32,22 @@
             
             
             <BoxView Color="White"
+                     
                    Opacity="0.1"
                      Grid.Row="1"
-                   Grid.RowSpan="6"
+                   Grid.RowSpan="5"
                    Grid.Column="0"/>
 
             <Label Text="Must be 5 to 20 characters long.&#10;No spaces or special characters (except _)."
-                  TextColor="Black"     
-                  FontSize="8"
+                  TextColor="Black" 
+                  HorizontalTextAlignment="Center"
+                  FontSize="10"
                   Grid.Row="1"
                    Padding="2"/>
 
 
             <Entry Placeholder="Username"
+                   PlaceholderColor="Black"
            Text="{Binding Username}"
            TextColor="Black"
            Grid.Row="1"
@@ -46,11 +56,13 @@
 
             <Label Text="Should contain first name and last name.&#10;First letter of each name should be capitalized."
                    TextColor="Black"
-                   FontSize="8"
+                  HorizontalTextAlignment="Center"
+                   FontSize="10"
                    Grid.Row="2"
                    Padding="2"/>
 
             <Entry Placeholder="Name"
+                   PlaceholderColor="Black"
            Text="{Binding Name}"
            TextColor="Black"
            Grid.Row="2"
@@ -59,12 +71,14 @@
 
             <Label Text="Must be at least 8 characters long.&#10;Must contain at least one uppercase, lowercase, number and special character.&#10;No spaces allowed."
                    TextColor="Black"
-                   FontSize="8"
+                  HorizontalTextAlignment="Center"
+                   FontSize="10"
                    Grid.Row="3"
                    Grid.RowSpan="2"
                    Padding="2"/>
 
             <Entry Placeholder="Password"
+                   PlaceholderColor="Black"
            Text="{Binding Password}"
            TextColor="Black"
            IsPassword="True"
@@ -73,6 +87,7 @@
            Grid.ColumnSpan="2"/>
 
             <Entry Placeholder="Repeat Password"
+                   PlaceholderColor="Black"
            Text="{Binding RepeatPassword}"
            TextColor="Black"
            IsPassword="True"
