@@ -67,7 +67,7 @@ namespace MauiTrading.ViewModel
 
             try
             {
-                var respons = await _httpClient.PostAsync("https://localhost:7247/api/users", content);
+                var respons = await _httpClient.PostAsync("https://localhost:7247/api/users/register", content);
                 
                 if (respons == null)
                     throw new Exception("Could not reach server, try again later.");
