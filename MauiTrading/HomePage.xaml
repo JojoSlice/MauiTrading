@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiTrading.HomePage"
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
-             x:DataType="viewmodel:HomeViewModel"
-             Title="HomePage">
+             x:DataType="viewmodel:HomeViewModel">
     <ContentPage.Resources>
      <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0" EndPoint="0,1">
@@ -23,13 +22,37 @@
                    Grid.Column="1"/>
         </Grid>
 
-        <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, 50"
-          ColumnDefinitions=".25*, .50*, .25*"
-          Padding="10"
-          RowSpacing="10"
-          ColumnSpacing="10">
-            
-        </Grid>
+        <ScrollView>
+            <FlexLayout Direction="Column" Padding="20">
+                <Border Padding="20"
+                        BackgroundColor="{StaticResource Tertiary}"
+                        Opacity="0.5">
+                    <StackLayout>
+
+                        <Label Text="Market Status:"
+                            FontSize="20"
+                            TextColor="{StaticResource PrimaryDarkText}"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding MarketStatus}"
+                            FontSize="14"
+                            TextColor="{StaticResource PrimaryDarkText}"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding MarketIsOpen}"
+                            FontSize="14"
+                            TextColor="{StaticResource PrimaryDarkText}"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding MarketHoliday}"
+                            FontSize="14"
+                            TextColor="{StaticResource PrimaryDarkText}"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding MarketSession}"
+                            FontSize="14"
+                            TextColor="{StaticResource PrimaryDarkText}"
+                            HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Border>
+            </FlexLayout>
+        </ScrollView>
     </Grid>
     
     </ContentPage>

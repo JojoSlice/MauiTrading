@@ -1,12 +1,13 @@
 using MauiTrading.ViewModel;
 
-namespace MauiTrading;
-
-public partial class HomePage : ContentPage
+namespace MauiTrading
 {
-	public HomePage()
+	public partial class HomePage : ContentPage
 	{
-		InitializeComponent();
-		BindingContext = new HomeViewModel();
+		public HomePage()
+		{
+			InitializeComponent();
+			BindingContext = new HomeViewModel();
+		}
 	}
 }
