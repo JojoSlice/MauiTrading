@@ -29,12 +29,8 @@
                         Opacity="0.5">
                     <StackLayout>
 
-                        <Label Text="Market Status:"
-                            FontSize="20"
-                            TextColor="{StaticResource PrimaryDarkText}"
-                            HorizontalOptions="Center"/>
                         <Label Text="{Binding MarketStatus}"
-                            FontSize="14"
+                            FontSize="20"
                             TextColor="{StaticResource PrimaryDarkText}"
                             HorizontalOptions="Center"/>
                         <Label Text="{Binding MarketIsOpen}"
