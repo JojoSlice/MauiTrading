@@ -25,7 +25,6 @@
         <ScrollView>
             <FlexLayout Direction="Column" Padding="20">
                 <Border Padding="20"
-                        BackgroundColor="{StaticResource Tertiary}"
                         Opacity="0.5">
                     <StackLayout>
 
