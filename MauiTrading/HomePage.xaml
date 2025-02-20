@@ -23,30 +23,59 @@
         </Grid>
 
         <ScrollView>
-            <FlexLayout Direction="Column" Padding="20">
-                <Border Padding="20"
-                        Opacity="0.5">
-                    <StackLayout>
+            <Grid 
+                Padding="10"
+                RowSpacing="10"
+                ColumnSpacing="10"
+                RowDefinitions="Auto, Auto, Auto, Auto"
+                ColumnDefinitions=" Auto, Auto, Auto, Auto, Auto">
+                
+                <Border StrokeThickness="2" 
+                        Stroke="{StaticResource Primary}" 
+                        Padding="10" 
+                        Background="{StaticResource SecondaryBrush}"
+                        Grid.Column="0"
+                        Grid.Row="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    
+                    <Grid Padding="10" 
+                          ColumnSpacing="10" 
+                          RowSpacing="10"
+                          RowDefinitions="Auto, Auto, Auto, Auto"
+                          ColumnDefinitions="Auto">
 
                         <Label Text="{Binding MarketStatus}"
                             FontSize="20"
                             TextColor="{StaticResource PrimaryDarkText}"
-                            HorizontalOptions="Center"/>
+                            HorizontalOptions="Center"
+                               Grid.Column="0"
+                               Grid.Row="0"/>
+                        
                         <Label Text="{Binding MarketIsOpen}"
                             FontSize="14"
                             TextColor="{StaticResource PrimaryDarkText}"
-                            HorizontalOptions="Center"/>
+                            HorizontalOptions="Center"
+                               Grid.Column="0"
+                               Grid.Row="1"/>
+                        
                         <Label Text="{Binding MarketHoliday}"
                             FontSize="14"
                             TextColor="{StaticResource PrimaryDarkText}"
-                            HorizontalOptions="Center"/>
+                            HorizontalOptions="Center"
+                               Grid.Column="0"
+                               Grid.Row="2"/>
+                        
                         <Label Text="{Binding MarketSession}"
                             FontSize="14"
                             TextColor="{StaticResource PrimaryDarkText}"
-                            HorizontalOptions="Center"/>
-                    </StackLayout>
+                            HorizontalOptions="Center"
+                               Grid.Column="0"
+                               Grid.Row="3"/>
+                    </Grid>
                 </Border>
-            </FlexLayout>
+            </Grid>
         </ScrollView>
     </Grid>
     

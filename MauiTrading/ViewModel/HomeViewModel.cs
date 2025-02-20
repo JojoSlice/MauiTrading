@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MauiTrading.ViewModel
@@ -34,7 +35,7 @@ namespace MauiTrading.ViewModel
 
                     if(marketData != null)
                     {
-                        MarketStatus = $"Market: {marketData.Exchange}";
+                        MarketStatus = $"Market: {marketData.Exchange ?? "None"}";
 
                         MarketIsOpen = marketData.IsOpen ? "Market is Open." : "Market is Closed.";
                         
@@ -55,9 +56,13 @@ namespace MauiTrading.ViewModel
         }
         public class Market
         {
+            [JsonPropertyName("exchange")]
             public string? Exchange { get; set; }
+            [JsonPropertyName("holiday")]
             public string? Holiday { get; set; }
+            [JsonPropertyName("isOpen")]
             public bool IsOpen { get; set; }
+            [JsonPropertyName("session")]
             public string? CurrentSession { get; set; }
         }
 
