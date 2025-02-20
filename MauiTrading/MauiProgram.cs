@@ -1,5 +1,6 @@
 ﻿using MauiTrading.ViewModel;
 using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace MauiTrading
 {
@@ -15,6 +16,8 @@ namespace MauiTrading
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            builder.ConfigureSyncfusionCore();
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
