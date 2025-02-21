@@ -1,6 +1,7 @@
 ﻿using MauiTrading.ViewModel;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
+using CommunityToolkit.Maui.Core;
 
 namespace MauiTrading
 {
@@ -18,6 +19,7 @@ namespace MauiTrading
                 });
 
             builder.ConfigureSyncfusionCore();
+            builder.UseMauiApp<App>().UseMauiCommunityToolkitCore();
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();

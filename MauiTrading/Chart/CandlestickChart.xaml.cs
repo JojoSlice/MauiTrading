@@ -1,10 +1,11 @@
 using System.Collections.ObjectModel;
+using Microsoft.Maui.Controls;
+using CommunityToolkit.Maui;
 
 namespace MauiTrading.Chart;
 
 public partial class CandlestickChart : ContentView
 {
-
     public static readonly BindableProperty ChartDataProperty =
         BindableProperty.Create(nameof(ChartData), typeof(ObservableCollection<CandleDataPoint>), typeof(CandlestickChart), new ObservableCollection<CandleDataPoint>());
 
@@ -56,4 +57,4 @@ public partial class CandlestickChart : ContentView
         }
     }
 }
-    
+   
