@@ -74,9 +74,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Chart\CandlestickChart.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

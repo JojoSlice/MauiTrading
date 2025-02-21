@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiTrading.HomePage"
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              x:DataType="viewmodel:HomeViewModel">
     <ContentPage.Resources>
-     <LinearGradientBrush x:Key="GradientBrush"
+        <LinearGradientBrush x:Key="GradientBrush"
                              StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
             <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
@@ -73,8 +74,39 @@
                             HorizontalOptions="Center"
                                Grid.Column="0"
                                Grid.Row="3"/>
+                        
                     </Grid>
                 </Border>
+                <chart:SfCartesianChart
+                    Grid.Column="1"
+                    Grid.ColumnSpan="4"
+                    Grid.Row="0">
+
+                    <chart:SfCartesianChart.Title>
+                        <Label Text="Market Today"/>
+                    </chart:SfCartesianChart.Title>
+
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:CategoryAxis>
+                            <chart:CategoryAxis.Title>
+                                <chart:ChartAxisTitle Text="Hour" TextColor="{StaticResource PrimaryDarkText}"/>
+                            </chart:CategoryAxis.Title>
+                        </chart:CategoryAxis>
+                    </chart:SfCartesianChart.XAxes>
+
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Price"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
+
+                    <chart:FastLineSeries ItemsSource="{Binding Data}"
+                                  XBindingPath="Hour"
+                                  YBindingPath="Price"/>
+
+                </chart:SfCartesianChart>
             </Grid>
         </ScrollView>
     </Grid>
