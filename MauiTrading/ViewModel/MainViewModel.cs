@@ -20,6 +20,8 @@ namespace MauiTrading.ViewModel
         [ObservableProperty]
         private string password;
 
+
+
         [RelayCommand]
         public async Task<bool> Login()
         {
@@ -56,7 +58,7 @@ namespace MauiTrading.ViewModel
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
                 return false;

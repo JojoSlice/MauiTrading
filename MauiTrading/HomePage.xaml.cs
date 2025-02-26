@@ -12,10 +12,9 @@ namespace MauiTrading
 			BindingContext = _viewModel;
 		}
 
-		protected override async void OnAppearing()
-		{
-			base.OnAppearing();
-			await _viewModel.GetMarketStatus();
-		}
+		//protected override async void OnAppearing()
+		//{
+		//	base.OnAppearing();
+		//}
 	}
 }

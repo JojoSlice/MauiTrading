@@ -44,34 +44,6 @@
                           RowDefinitions="auto, auto"
                           ColumnDefinitions="auto, auto, auto, auto">
 
-                        <Label Text="{Binding MarketStatus}"
-                            FontSize="14"
-                            TextColor="{StaticResource Secondary}"
-                            HorizontalOptions="Center"
-                               Grid.Column="0"
-                               Grid.Row="0"/>
-
-                        <Label Text="{Binding MarketIsOpen}"
-                            FontSize="14"
-                            TextColor="{StaticResource Secondary}"
-                            HorizontalOptions="Center"
-                               Grid.Column="1"
-                               Grid.Row="0"/>
-
-                        <Label Text="{Binding MarketHoliday}"
-                            FontSize="14"
-                            TextColor="{StaticResource Secondary}"
-                            HorizontalOptions="Center"
-                               Grid.Column="2"
-                               Grid.Row="0"/>
-
-                        <Label Text="{Binding MarketSession}"
-                            FontSize="14"
-                            TextColor="{StaticResource Secondary}"
-                            HorizontalOptions="Center"
-                               Grid.Column="3"
-                               Grid.Row="0"/>
-
                         <chart:SfCartesianChart
                                 Grid.Column="0"
                                 Grid.Row="1"
@@ -94,8 +66,8 @@
                             </chart:SfCartesianChart.YAxes>
 
                             <chart:FastLineSeries ItemsSource="{Binding Data}"
-                                  XBindingPath="Hour"
-                                  YBindingPath="Price"/>
+                                  XBindingPath="Day"
+                                  YBindingPath="PnL"/>
 
                         </chart:SfCartesianChart>
                     </Grid>

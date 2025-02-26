@@ -55,5 +55,21 @@ namespace MauiTrading.JWT
 
             return client;
         }
+
+
+        public static async Task<string> GetUsernameAsync()
+        {
+            var token = await GetTokenAsync();
+            if (string.IsNullOrEmpty(token))
+                return null;
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadToken(token) as JwtSecurityToken;
+
+            var usernameClaim = jwtToken?.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+
+            return usernameClaim?.Value;
+        }
+
     }
 }
