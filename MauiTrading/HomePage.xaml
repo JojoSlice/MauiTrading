@@ -52,7 +52,7 @@
                             <chart:SfCartesianChart.XAxes>
                                 <chart:CategoryAxis>
                                     <chart:CategoryAxis.Title>
-                                        <chart:ChartAxisTitle Text="Hour" TextColor="{StaticResource Secondary}"/>
+                                        <chart:ChartAxisTitle Text="Date" TextColor="{StaticResource Secondary}"/>
                                     </chart:CategoryAxis.Title>
                                 </chart:CategoryAxis>
                             </chart:SfCartesianChart.XAxes>
@@ -66,7 +66,7 @@
                             </chart:SfCartesianChart.YAxes>
 
                             <chart:FastLineSeries ItemsSource="{Binding Data}"
-                                  XBindingPath="Day"
+                                  XBindingPath="Date"
                                   YBindingPath="PnL"/>
 
                         </chart:SfCartesianChart>

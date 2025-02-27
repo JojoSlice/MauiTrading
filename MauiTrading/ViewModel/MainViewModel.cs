@@ -13,7 +13,7 @@ namespace MauiTrading.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
 
         [ObservableProperty]
         private string username;
@@ -21,6 +21,10 @@ namespace MauiTrading.ViewModel
         private string password;
 
 
+        public MainViewModel(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         [RelayCommand]
         public async Task<bool> Login()

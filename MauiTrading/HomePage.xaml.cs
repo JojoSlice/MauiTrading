@@ -2,20 +2,26 @@ using MauiTrading.ViewModel;
 
 namespace MauiTrading
 {
-	public partial class HomePage : ContentPage
-	{
-		private readonly HomeViewModel _viewModel;
-		public HomePage()
-		{
-			InitializeComponent();
-			_viewModel = new HomeViewModel();
-			BindingContext = _viewModel;
-		}
+    public partial class HomePage : ContentPage
+    {
+        private readonly HomeViewModel _viewModel;
 
-		protected override async void OnAppearing()
-		{
-			base.OnAppearing();
-			await _viewModel.LoadPnLData();
-		}
-	}
+        public HomePage(HomeViewModel viewModel)
+        {
+            InitializeComponent();
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadPnLDataAsync();
+        }
+
+        private async Task LoadPnLDataAsync()
+        {
+                await _viewModel.LoadPnLData();
+        }
+    }
 }

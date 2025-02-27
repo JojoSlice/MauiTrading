@@ -13,7 +13,7 @@ namespace MauiTrading.ViewModel
 {
     public partial class RegistrationViewModel : ObservableObject
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
 
 
         [ObservableProperty]
@@ -25,8 +25,9 @@ namespace MauiTrading.ViewModel
         [ObservableProperty]
         private string name;
 
-        public RegistrationViewModel()
+        public RegistrationViewModel(HttpClient httpClient)
         {
+            _httpClient = httpClient;
             RefresCanExecute();
         }
 

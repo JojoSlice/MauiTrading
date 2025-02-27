@@ -14,40 +14,54 @@ namespace MauiTrading.ViewModel
 {
     public partial class HomeViewModel : ObservableObject
     {
-        private readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient;
         public string Username { get; set; }
         public ObservableCollection<Models.PnLData> Data { get; set; } = new ObservableCollection<Models.PnLData>();
 
-        public async void GetUserName()
+        public HomeViewModel(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+            Initialize();
+        }
+
+        private async void Initialize()
+        {
+            await GetUserName();
+            await LoadPnLData();
+        }
+        public async Task GetUserName()
         {
             Username = await JWT.Service.GetUsernameAsync();
         }
 
-        public HomeViewModel()
-        {
-            LoadPnLData();
-        }
-
-        public async Task<List<PnLData>> LoadPnLData()
+        public async Task LoadPnLData()
         {
             try
             {
-                var response = await _httpClient.GetAsync("http//localhost:7247/api/pnl/getpnl");
+                var response = await _httpClient.GetAsync($"http://localhost:7247/api/pnl/getpnl?username={Username}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     var pnLData = JsonSerializer.Deserialize<List<PnLData>>(jsonResponse);
-                    return pnLData ?? new List<PnLData>();
+
+                    if (pnLData != null)
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            Data.Clear();
+                            foreach (var item in pnLData)
+                            {
+                                Data.Add(item);
+                            }
+                        });
+                    }
                 }
             }
             catch
             {
                 await Shell.Current.DisplayAlert("Error", "Could not get PnL data.", "OK");
             }
-
-            return new List<PnLData>();
         }
-
     }
 }
