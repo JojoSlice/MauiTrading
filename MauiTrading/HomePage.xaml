@@ -71,12 +71,14 @@
                                        VerticalOptions="Start">
                     <Button Text="Trade"
                             Command="{Binding TradeCommand}"/>
-                    <Button Text="Placeholder"
+                    <Button Text="Your Trade history"
+                            Command="{Binding TradeHistoryCommand}"
                             />
                     <Button Text="LogOut"
                             Command="{Binding LogOutCommand}"/>
                 </HorizontalStackLayout>
 
+                <WebView Source="https://finance.yahoo.com/"/>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

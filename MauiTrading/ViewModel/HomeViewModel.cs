@@ -41,6 +41,11 @@ namespace MauiTrading.ViewModel
             JWT.Service.RemoveToken();
             await Shell.Current.GoToAsync(nameof(MainPage));
         }
+        [RelayCommand]
+        async Task TradeHistory()
+        {
+
+        }
         public async Task GetUserName()
         {
             Username = await JWT.Service.GetUsernameAsync();
