@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using MauiTrading.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,9 +28,25 @@ namespace MauiTrading.ViewModel
             LoadPnLData();
         }
 
-        private void LoadPnLData()
+        public async Task<List<PnLData>> LoadPnLData()
         {
+            try
+            {
+                var response = await _httpClient.GetAsync("http//localhost:7247/api/pnl/getpnl");
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var pnLData = JsonSerializer.Deserialize<List<PnLData>>(jsonResponse);
+                    return pnLData ?? new List<PnLData>();
+                }
+            }
+            catch
+            {
+                await Shell.Current.DisplayAlert("Error", "Could not get PnL data.", "OK");
+            }
+
+            return new List<PnLData>();
         }
 
     }
