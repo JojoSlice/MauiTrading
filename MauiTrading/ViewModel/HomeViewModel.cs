@@ -46,7 +46,7 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         async Task LogOut()
         {
-            JWT.Service.RemoveToken();
+            //JWT.Service.RemoveToken();
             await Shell.Current.GoToAsync(nameof(MainPage));
         }
         public async Task GetUserName()

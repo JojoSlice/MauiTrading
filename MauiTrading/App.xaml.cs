@@ -12,16 +12,16 @@
         {
             return new Window(new AppShell());
         }
-        protected override async void OnStart()
-        {
-            if (await JWT.Service.IsTokenValidAsync())
-            {
-                await Shell.Current.GoToAsync(nameof(HomePage));
-            }
-            else
-            {
-                await Shell.Current.GoToAsync(nameof(MainPage));
-            }
-        }
+        //protected override async void OnStart()
+        //{
+        //    if (await JWT.Service.IsTokenValidAsync())
+        //    {
+        //        await Shell.Current.GoToAsync(nameof(HomePage));
+        //    }
+        //    else
+        //    {
+        //        await Shell.Current.GoToAsync(nameof(MainPage));
+        //    }
+        //}
     }
 }

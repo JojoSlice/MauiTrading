@@ -19,14 +19,14 @@ namespace MauiTrading.ViewModel
         private string username;
         [ObservableProperty]
         private string password;
-         [ObservableProperty]
-        private bool isWindows;
+        // [ObservableProperty]
+        //private bool isWindows;
 
 
         public MainViewModel(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            IsWindows = DeviceInfo.Platform == DevicePlatform.WinUI;
+            //IsWindows = DeviceInfo.Platform == DevicePlatform.WinUI;
         }
 
         [RelayCommand]
@@ -78,10 +78,11 @@ namespace MauiTrading.ViewModel
             await Shell.Current.GoToAsync(nameof(RegistrationPage));
         }
 
-        [RelayCommand]
-        async Task Quit()
-        {
-            Application.Current.Quit();
-        }
+        //[RelayCommand]
+        //void Quit()
+        //{
+        //    if (isWindows)
+        //        Application.Current.Quit();
+        //}
     }
 }

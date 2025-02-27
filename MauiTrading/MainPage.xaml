@@ -66,7 +66,7 @@
                 </Button.Shadow>
             </Button>
             
-            <Button Text="Quit"
+            <!--<Button Text="Quit"
                     IsVisible="{Binding IsWindows}"
                     Command="{Binding QuitCommand}"
                     Grid.Row="5"
@@ -76,7 +76,7 @@
                     <Button.Shadow>
                         <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
                     </Button.Shadow>
-            </Button>
+            </Button>-->
 
         </Grid>
     </Grid>

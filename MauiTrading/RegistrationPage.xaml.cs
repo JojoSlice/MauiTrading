@@ -9,10 +9,12 @@ namespace MauiTrading
 {
     public partial class RegistrationPage : ContentPage
     {
-        public RegistrationPage()
+        private readonly RegistrationViewModel _viewModel;
+        public RegistrationPage(RegistrationViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = new RegistrationViewModel();
+            _viewModel = viewModel;
+            BindingContext = _viewModel;
         }
     }
 }
