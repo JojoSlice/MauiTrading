@@ -30,21 +30,24 @@ namespace MauiTrading.ViewModel
             await GetUserName();
             await LoadPnLData();
         }
+        
         [RelayCommand]
         async Task Trade()
         {
 
         }
+        
+        [RelayCommand]
+        async Task TradeHistory()
+        {
+
+        }
+        
         [RelayCommand]
         async Task LogOut()
         {
             JWT.Service.RemoveToken();
             await Shell.Current.GoToAsync(nameof(MainPage));
-        }
-        [RelayCommand]
-        async Task TradeHistory()
-        {
-
         }
         public async Task GetUserName()
         {
