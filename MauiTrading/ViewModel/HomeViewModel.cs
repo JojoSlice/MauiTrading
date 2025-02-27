@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MauiTrading.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,17 @@ namespace MauiTrading.ViewModel
         {
             await GetUserName();
             await LoadPnLData();
+        }
+        [RelayCommand]
+        async Task Trade()
+        {
+
+        }
+        [RelayCommand]
+        async Task LogOut()
+        {
+            JWT.Service.RemoveToken();
+            await Shell.Current.GoToAsync(nameof(MainPage));
         }
         public async Task GetUserName()
         {

@@ -21,7 +21,7 @@ namespace MauiTrading
 
         private async Task LoadPnLDataAsync()
         {
-                await _viewModel.LoadPnLData();
+            await _viewModel.LoadPnLData();
         }
     }
 }

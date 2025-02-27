@@ -28,21 +28,15 @@
                 Padding="10"
                 Spacing="10">
 
-                <Border StrokeThickness="2" 
+                <Border StrokeThickness="1" 
                         Stroke="{StaticResource PrimaryDark}" 
                         Padding="10" 
                         Background="{StaticResource PrimaryDark}"
                         Grid.Column="0"
                         Grid.Row="0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="10"/>
+                        <RoundRectangle CornerRadius="5"/>
                     </Border.StrokeShape>
-
-                    <Grid Padding="10" 
-                          ColumnSpacing="10" 
-                          RowSpacing="10"
-                          RowDefinitions="auto, auto"
-                          ColumnDefinitions="auto, auto, auto, auto">
 
                         <chart:SfCartesianChart
                                 Grid.Column="0"
@@ -70,11 +64,19 @@
                                   YBindingPath="PnL"/>
 
                         </chart:SfCartesianChart>
-                    </Grid>
                 </Border>
-                
-                
-                
+
+                <HorizontalStackLayout Spacing="10" Padding="10"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Start">
+                    <Button Text="Trade"
+                            Command="{Binding TradeCommand}"/>
+                    <Button Text="Placeholder"
+                            />
+                    <Button Text="LogOut"
+                            Command="{Binding LogOutCommand}"/>
+                </HorizontalStackLayout>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
