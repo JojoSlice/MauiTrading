@@ -34,7 +34,7 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         async Task Trade()
         {
-
+            await Shell.Current.GoToAsync(nameof(TradePage));
         }
         
         [RelayCommand]

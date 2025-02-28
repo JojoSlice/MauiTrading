@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiTrading.TradePage"
+             xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             Title="">
+    <VerticalStackLayout>
+        
+        <Picker Title="Select asset"
+        ItemsSource="{Binding tradeOptions}"
+        SelectedItem="{Binding SelectedOption}"
+        ItemDisplayBinding="{Binding Name}"/>
+        
+        <Border StrokeThickness="1" 
+                        Stroke="{StaticResource PrimaryDark}" 
+                        Padding="10" 
+                        Background="{StaticResource PrimaryDark}"
+                        Grid.Column="0"
+                        Grid.Row="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5"/>
+            </Border.StrokeShape>
+
+
+            <chart:SfCartesianChart
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="4">
+
+                <chart:SfCartesianChart.XAxes>
+                    <chart:CategoryAxis>
+                        <chart:CategoryAxis.Title>
+                            <chart:ChartAxisTitle Text="Date" TextColor="{StaticResource Secondary}"/>
+                        </chart:CategoryAxis.Title>
+                    </chart:CategoryAxis>
+                </chart:SfCartesianChart.XAxes>
+
+                <chart:SfCartesianChart.YAxes>
+                    <chart:NumericalAxis>
+                        <chart:NumericalAxis.Title>
+                            <chart:ChartAxisTitle Text="Price" TextColor="{StaticResource Secondary}"/>
+                        </chart:NumericalAxis.Title>
+                    </chart:NumericalAxis>
+                </chart:SfCartesianChart.YAxes>
+
+                <chart:CandleSeries ItemsSource="{}"
+                        XBindingPath="Date"
+                        Open="Open"
+                        High="High"
+                        Low="Low"
+                        Close="Close"
+                        EnableSolidCandle="true"/>
+
+            </chart:SfCartesianChart>
+            
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>
