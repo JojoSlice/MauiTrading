@@ -58,7 +58,7 @@ namespace MauiTrading.ViewModel
         {
             try
             {
-                var response = await _httpClient.GetAsync($"http://localhost:7247/api/pnl/getpnl?username={Username}");
+                var response = await _httpClient.GetAsync($"http://localhost:7247/api/pnl/getseason55pnl?username={Username}");
 
                 if (response.IsSuccessStatusCode)
                 {
