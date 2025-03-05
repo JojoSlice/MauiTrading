@@ -4,13 +4,16 @@
              x:Class="MauiTrading.TradePage"
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             x:DataType="viewmodel:TradeViewModel"
              Title="">
     <VerticalStackLayout>
         
         <Picker Title="Select asset"
-        ItemsSource="{Binding tradeOptions}"
+        ItemsSource="{Binding TradeOptions}"
         SelectedItem="{Binding SelectedOption}"
         ItemDisplayBinding="{Binding Name}"/>
+        
+        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
         
         <Border StrokeThickness="1" 
                         Stroke="{StaticResource PrimaryDark}" 
