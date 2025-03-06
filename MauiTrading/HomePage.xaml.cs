@@ -1,3 +1,4 @@
+using MauiTrading.Service;
 using MauiTrading.ViewModel;
 
 namespace MauiTrading
@@ -5,11 +6,14 @@ namespace MauiTrading
     public partial class HomePage : ContentPage
     {
         private readonly HomeViewModel _viewModel;
+        private readonly AuthService _authService;
 
-        public HomePage(HomeViewModel viewModel)
+        public HomePage(HomeViewModel viewModel, AuthService authService)
         {
             InitializeComponent();
-            _viewModel = viewModel;
+            _authService = authService;
+
+            _viewModel = new HomeViewModel(new HttpClient(), _authService);
             BindingContext = _viewModel;
         }
 

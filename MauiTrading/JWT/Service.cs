@@ -70,6 +70,5 @@ namespace MauiTrading.JWT
 
             return usernameClaim?.Value;
         }
-
     }
 }

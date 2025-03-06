@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiTrading;
+using MauiTrading.Service;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,63 +14,26 @@ namespace MauiTrading.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        private readonly HttpClient _httpClient;
+        private readonly AuthService _authService;
+
 
         [ObservableProperty]
         private string username;
         [ObservableProperty]
         private string password;
-        // [ObservableProperty]
-        //private bool isWindows;
 
 
-        public MainViewModel(HttpClient httpClient)
+        public MainViewModel(AuthService authService)
         {
-            _httpClient = httpClient;
-            //IsWindows = DeviceInfo.Platform == DevicePlatform.WinUI;
+            _authService = authService;
         }
 
         [RelayCommand]
         public async Task<bool> Login()
         {
-            var loginData = new
-            {
-                Username = username,
-                Password = password
-            };
+            Service.AuthService.LoginDto loginDto = new Service.AuthService.LoginDto { Password = password, Username = username };
 
-            var json = JsonSerializer.Serialize(loginData);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var respons = await _httpClient.PostAsync("https://localhost:7247/api/users/login", content);
-
-                if (respons == null)
-                    throw new Exception("Could not reach server, try again later.");
-
-                if (respons.IsSuccessStatusCode)
-                {
-                    var responsBody = await respons.Content.ReadAsStringAsync();
-                    var responsObject = JsonSerializer.Deserialize<JsonElement>(responsBody);
-
-                    var token = responsObject.GetProperty("token").GetString();
-                    await JWT.Service.SaveTokenAsync(token);
-
-                    await Shell.Current.GoToAsync(nameof(HomePage));
-                    return true;
-                }
-                else
-                {
-                    await Shell.Current.DisplayAlert("Error", "Invalid username or password", "OK");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
-                return false;
-            }
+            return await _authService.LoginAsync(loginDto);
         }
 
         [RelayCommand]
@@ -77,12 +41,5 @@ namespace MauiTrading.ViewModel
         {
             await Shell.Current.GoToAsync(nameof(RegistrationPage));
         }
-
-        //[RelayCommand]
-        //void Quit()
-        //{
-        //    if (isWindows)
-        //        Application.Current.Quit();
-        //}
     }
 }

@@ -12,8 +12,8 @@ namespace MauiTrading.ViewModel
     public partial class TradeViewModel : ObservableObject
     {
 
-        public string Username { get; set; }
         private readonly HttpClient _httpClient;
+        public string Username { get; set; }
 
         [ObservableProperty]
         private List<Models.Asset> tradeOptions;

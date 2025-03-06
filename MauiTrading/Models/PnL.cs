@@ -8,9 +8,8 @@ namespace MauiTrading.Models
 {
     public class PnLData
     {
-        public string UserId { get; set; }
-        public double PnLPercent { get; set; }
-        public DateTime Date { get; set; }
-        public Double Points { get; set; }
-    } 
+        public string UserId { get; set; } = string.Empty;
+        public double PnLPercent { get; set; } = 0;
+        public DateTime Date { get; set; } = DateTime.UtcNow;
+    }
 }

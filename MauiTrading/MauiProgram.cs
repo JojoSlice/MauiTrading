@@ -25,6 +25,8 @@ namespace MauiTrading
             builder.Services.AddTransient<MainViewModel>();
 
             builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<Service.AuthService>();
+
 
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<HomeViewModel>();
