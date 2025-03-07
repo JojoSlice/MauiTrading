@@ -1,15 +1,35 @@
-﻿using MauiTrading.ViewModel;
+﻿using MauiTrading.Service;
+using MauiTrading.ViewModel;
 
 namespace MauiTrading
 {
     public partial class MainPage : ContentPage
     {
-        private readonly MainViewModel _viewModel;
-        public MainPage(MainViewModel viewModel)
+        private readonly AuthService _authService;
+        private readonly MainViewModel _mainViewModel;
+
+        public MainPage(AuthService authService, MainViewModel mainViewModel)
         {
             InitializeComponent();
-            _viewModel = viewModel;
-            BindingContext = _viewModel;
+            _authService = authService;
+            _mainViewModel = mainViewModel;
+            BindingContext = _mainViewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await TryAutoLogin();
+        }
+
+        private async Task TryAutoLogin()
+        {
+            bool autoLoginSuccess = await _authService.TryAutoLoginAsync();
+
+            if (autoLoginSuccess)
+            {
+                await Shell.Current.GoToAsync(nameof(HomePage));
+            }
         }
     }
 }

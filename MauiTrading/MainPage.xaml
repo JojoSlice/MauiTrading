@@ -66,18 +66,6 @@
                 </Button.Shadow>
             </Button>
             
-            <!--<Button Text="Quit"
-                    IsVisible="{Binding IsWindows}"
-                    Command="{Binding QuitCommand}"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    BorderColor="{StaticResource Tertiary}"
-                    BorderWidth="0.5">
-                    <Button.Shadow>
-                        <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
-                    </Button.Shadow>
-            </Button>-->
-
         </Grid>
     </Grid>
 </ContentPage>

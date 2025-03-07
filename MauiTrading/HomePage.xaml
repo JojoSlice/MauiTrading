@@ -29,9 +29,9 @@
                 Spacing="10">
 
                 <Border StrokeThickness="1" 
-                        Stroke="{StaticResource PrimaryDark}" 
+                        Stroke="#80808080" 
                         Padding="10" 
-                        Background="{StaticResource PrimaryDark}"
+                        Background="#80808090"
                         Grid.Column="0"
                         Grid.Row="0">
                     <Border.StrokeShape>
@@ -54,11 +54,20 @@
                             <chart:SfCartesianChart.YAxes>
                                 <chart:NumericalAxis>
                                     <chart:NumericalAxis.Title>
-                                        <chart:ChartAxisTitle Text="Price" TextColor="{StaticResource Secondary}"/>
+                                        <chart:ChartAxisTitle Text="PnL" TextColor="{StaticResource Secondary}"/>
                                     </chart:NumericalAxis.Title>
+
+                                <chart:NumericalAxis.Interval>10</chart:NumericalAxis.Interval>
+                                <chart:NumericalAxis.Minimum>-10</chart:NumericalAxis.Minimum>
+                                    <chart:NumericalAxis.Maximum>10</chart:NumericalAxis.Maximum>
+                                    
+                                    <chart:NumericalAxis.LabelStyle>
+                                        <chart:ChartAxisLabelStyle LabelFormat="{}{0}%" TextColor="{StaticResource Secondary}"/> 
+                                    </chart:NumericalAxis.LabelStyle>
+                                    
                                 </chart:NumericalAxis>
                             </chart:SfCartesianChart.YAxes>
-
+                            
                             <chart:FastLineSeries ItemsSource="{Binding Data}"
                                   XBindingPath="Date"
                                   YBindingPath="PnL"/>

@@ -47,10 +47,9 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         async Task LogOut()
         {
-            JWT.Service.RemoveToken();
-            await Shell.Current.GoToAsync(nameof(MainPage));
+            await _authService.LogoutAsync();
+            await Shell.Current.GoToAsync("//MainPage", true);
         }
-        //Lös det hära!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public async Task LoadPnLData()
         {
             var currentUser = _authService.CurrentUser;
@@ -60,11 +59,10 @@ namespace MauiTrading.ViewModel
                 return;
             }
 
-            var json = JsonSerializer.Serialize(currentUser);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
             try
             {
-                var response = await _httpClient.PostAsync($"http://localhost:7247/api/pnl/getseasonpnl", content);
+                var url = $"https://localhost:7247/api/pnl/get?username={currentUser.username}";
+                var response = await _httpClient.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -94,7 +92,6 @@ namespace MauiTrading.ViewModel
             }
             catch (Exception ex)
             {
-                // Fångar eventuella undantag
                 await Shell.Current.DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
             } 
         }

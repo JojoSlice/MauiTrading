@@ -38,8 +38,9 @@ namespace MauiTrading.Service
                     var responsObject = JsonSerializer.Deserialize<JsonElement>(responsBody);
 
                     var token = responsObject.GetProperty("token").GetString();
-                    await JWT.Service.SaveTokenAsync(token);
-                    CurrentUser = new User { Username = loginDto.Username, Token = token };
+
+                    await SecureStorage.SetAsync(TokenKey, token);
+                    CurrentUser = new User { username = loginDto.username, token = token };
 
                     await Shell.Current.GoToAsync(nameof(HomePage));
                     return true;
@@ -50,7 +51,7 @@ namespace MauiTrading.Service
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
                 return false;
@@ -72,7 +73,7 @@ namespace MauiTrading.Service
                 }
                 else
                 {
-                    CurrentUser = new User { Username = usernameClaim.Value, Token = token };
+                    CurrentUser = new User { username = usernameClaim.Value, token = token };
                     return true;
                 }
 
@@ -81,21 +82,29 @@ namespace MauiTrading.Service
         }
         public async Task LogoutAsync()
         {
-            await SecureStorage.SetAsync(TokenKey, string.Empty);
-            CurrentUser = null;
+            try
+            {
+                SecureStorage.RemoveAll();
+                CurrentUser = null;
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", $"Error during logout: {ex.Message}", "OK");
+                throw;
+            }
         }
 
         
 
         public class LoginDto
         {
-            public string Username { get; set; } = string.Empty;
-            public string Password { get; set; } = string.Empty;
+            public string username { get; set; } = string.Empty;
+            public string password { get; set; } = string.Empty;
         }
         public class User
         {
-            public string Username { get; set; } = string.Empty;
-            public string Token { get; set; } = string.Empty;
+            public string username { get; set; } = string.Empty;
+            public string token { get; set; } = string.Empty;
         }
     }
 }

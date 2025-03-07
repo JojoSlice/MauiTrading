@@ -21,15 +21,15 @@ namespace MauiTrading
                 });
 
 
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddTransient<MainViewModel>();
 
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<Service.AuthService>();
 
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
 
-            builder.Services.AddSingleton<HomePage>();
-            builder.Services.AddSingleton<HomeViewModel>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<HomeViewModel>();
 
             builder.Services.AddTransient<RegistrationPage>();
             builder.Services.AddTransient<RegistrationViewModel>();
