@@ -8,10 +8,13 @@
              Title="">
     <VerticalStackLayout>
         
-        <Picker Title="Select asset"
-        ItemsSource="{Binding TradeOptions}"
-        SelectedItem="{Binding SelectedOption}"
-        ItemDisplayBinding="{Binding Name}"/>
+        <Picker Title="Select asset" 
+                TextColor="{StaticResource Secondary}" 
+                BackgroundColor="{StaticResource PrimaryDark}" 
+                FontAutoScalingEnabled="True" 
+                ItemsSource="{Binding TradeOptions}"
+                SelectedItem="{Binding SelectedOption}"
+                ItemDisplayBinding="{Binding Name}"/>
         
         <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
         
@@ -47,7 +50,7 @@
                     </chart:NumericalAxis>
                 </chart:SfCartesianChart.YAxes>
 
-                <chart:CandleSeries ItemsSource="{}"
+                <chart:CandleSeries ItemsSource="{Binding Data}"
                         XBindingPath="Date"
                         Open="Open"
                         High="High"
@@ -58,5 +61,30 @@
             </chart:SfCartesianChart>
             
         </Border>
+        <Grid RowDefinitions="auto, auto"
+              ColumnDefinitions="auto, auto, auto"
+              Padding="10"
+              ColumnSpacing="10">
+            
+            <Button Text="Buy"
+                    BindingContext=""
+                    Grid.Column="0"/>
+            <Button Text="Sell"
+                    BindingContext=""
+                    Grid.Column="1"/>
+            <Label Text="{Binding SelectedAsset.Price, StringFormat= 'Price: {0:F2}'}"
+                   Grid.Column="2"/>
+            <Entry Placeholder="TakeProfit level"
+                   Text="{Binding TakeProfit}"
+                   Grid.Row="1"/>
+            <Entry Placeholder="StopLoss level"
+                   Text="{Binding StopLoss}"
+                   Grid.Row="1"
+                   Grid.Column="1"/>
+            <Entry Placeholder="Points to use"
+                   Text="{Binding Points}"
+                   Grid.Row="1"
+                   Grid.Column="2"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

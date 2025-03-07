@@ -87,7 +87,7 @@
                             Command="{Binding LogOutCommand}"/>
                 </HorizontalStackLayout>
 
-                <WebView Source="https://finance.yahoo.com/"/>
+                <!--<WebView Source="https://finance.yahoo.com/"/>-->
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

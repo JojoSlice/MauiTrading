@@ -8,7 +8,7 @@ namespace MauiTrading
         private readonly HomeViewModel _viewModel;
         private readonly AuthService _authService;
 
-        public HomePage(HomeViewModel viewModel, AuthService authService)
+        public HomePage(AuthService authService)
         {
             InitializeComponent();
             _authService = authService;

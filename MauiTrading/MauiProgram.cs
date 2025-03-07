@@ -34,6 +34,9 @@ namespace MauiTrading
             builder.Services.AddTransient<RegistrationPage>();
             builder.Services.AddTransient<RegistrationViewModel>();
 
+            builder.Services.AddTransient<TradePage>();
+            builder.Services.AddTransient<TradeViewModel>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
