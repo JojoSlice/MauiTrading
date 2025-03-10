@@ -9,6 +9,8 @@ using System.Text.Json;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiTrading.Service;
+using System.Runtime.CompilerServices;
+using System.Net;
 
 namespace MauiTrading.ViewModel
 {
@@ -180,16 +182,18 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         public async Task Buy()
         {
-            var trade = await BuildTrade(true);
+            var trade = BuildTrade(true);
+            await SaveTrade(trade);   
         }
 
         [RelayCommand]
         public async Task Sell()
         {
-            var trade = await BuildTrade(false);
+            var trade = BuildTrade(false);
+            await SaveTrade(trade);   
         }
 
-        public async Task<Models.TradeData> BuildTrade(bool isLong)
+        public Models.TradeData BuildTrade(bool isLong)
         {
             var trade = new Models.TradeData
             {
@@ -203,6 +207,29 @@ namespace MauiTrading.ViewModel
                 TakeProfit = TakeProfit
             };
             return trade;
+        }
+        public async Task SaveTrade(Models.TradeData trade)
+        {
+            var json = JsonSerializer.Serialize(trade);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+            try
+            {
+                var result = await _httpClient.PostAsync("https://localhost:7247/api/trade/newtrade", content);
+                if (result == null)
+                    throw new Exception("Could not reach server, try again.");
+
+                if (result.IsSuccessStatusCode)
+                {
+                    await Shell.Current.DisplayAlert("Success", "Trade is made", "Ok");
+                }
+                else
+                    throw new Exception(HttpStatusCode.Conflict.ToString());
+            }
+            catch(Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+            }
         }
         
         private async Task LoadDataAsync(Models.Asset value)
