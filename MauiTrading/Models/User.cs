@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MauiTrading.Models
 {
-    class User
+    public class User
     {
         public string Id { get; set; }
 

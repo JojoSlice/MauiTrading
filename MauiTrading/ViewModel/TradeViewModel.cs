@@ -11,14 +11,15 @@ using CommunityToolkit.Mvvm.Input;
 using MauiTrading.Service;
 using System.Runtime.CompilerServices;
 using System.Net;
+using MauiTrading.Models;
+using System.Reflection;
 
 namespace MauiTrading.ViewModel
 {
     public partial class TradeViewModel : INotifyPropertyChanged
     {
 
-        private readonly HttpClient _httpClient;
-        private readonly AuthService _authService;
+        private readonly ApiServiceFactory _apiServiceFactory;
 
         private Models.User userData;
 
@@ -127,48 +128,26 @@ namespace MauiTrading.ViewModel
         
         public ObservableCollection<Models.Candle> Data { get; set; } = new ObservableCollection<Models.Candle>();
         
-        public TradeViewModel(HttpClient httpClient, AuthService authService)
+        public TradeViewModel(ApiServiceFactory apiServiceFactory)
         {
-            _authService = authService;
-            _httpClient = httpClient;
+            _apiServiceFactory = apiServiceFactory;
             Initialize();
         }
 
         private async void Initialize()
         {
             TradeOptions = await GetTradeOptions();
-            await GetUser();
+            var user = await GetUser();
 
             if (TradeOptions != null && TradeOptions.Count > 0)
             {
                 SelectedOption = TradeOptions[0];
             }
         }
-        public async Task GetUser()
+        public async Task<Models.User> GetUser()
         {
-            var user = _authService.CurrentUser;
-            try
-            {
-                var response = await _httpClient.GetAsync($"https://localhost:7247/api/users/getuser");
-                if (response.IsSuccessStatusCode)
-                {
-                    var jsonResponse = await response.Content.ReadAsStreamAsync();
-                    userData = JsonSerializer.Deserialize<Models.User>(jsonResponse);
-                    if (userData == null)
-                    {
-                        throw new Exception("Could not find userData");
-                    }
-                }
-                else 
-                {
-                    throw new Exception("Could not connect to server");
-                }
-            }
-            catch(Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
-            }
-
+            var userService = _apiServiceFactory.CreateService<User>("user");
+            return await userService.FetchDataAsync<string>();
         }
 
         private void OnSelectedOptionChanged(Models.Asset value)
@@ -210,25 +189,12 @@ namespace MauiTrading.ViewModel
         }
         public async Task SaveTrade(Models.TradeData trade)
         {
-            var json = JsonSerializer.Serialize(trade);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            
-            try
-            {
-                var result = await _httpClient.PostAsync("https://localhost:7247/api/trade/newtrade", content);
-                if (result == null)
-                    throw new Exception("Could not reach server, try again.");
+            var tradeService = _apiServiceFactory.CreateService<bool>("trade");
 
-                if (result.IsSuccessStatusCode)
-                {
-                    await Shell.Current.DisplayAlert("Success", "Trade is made", "Ok");
-                }
-                else
-                    throw new Exception(HttpStatusCode.Conflict.ToString());
-            }
-            catch(Exception ex)
+            var result = await tradeService.FetchDataAsync(trade);
+            if (!result)
             {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
+                await Shell.Current.DisplayAlert("Error", "Could not place trade", "Ok");
             }
         }
         
@@ -239,103 +205,37 @@ namespace MauiTrading.ViewModel
         }
         public async Task<List<Models.Asset>> GetTradeOptions()
         {
-            try
-            {
+            var assetService = _apiServiceFactory.CreateService<List<Asset>>("asset");
 
-                var response = await _httpClient.GetAsync($"https://localhost:7247/api/stocks/getassets");
-                if (response.IsSuccessStatusCode)
-                {
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var assets = JsonSerializer.Deserialize<List<Models.Asset>>(jsonResponse);
-
-                    if (assets != null)
-                    {
-                        return assets;
-                    }
-                    else
-                    {
-                        throw new Exception("Could not load assets");
-                    }
-                }
-                else
-                {
-                    throw new Exception("Could not reach server");
-                }
-            }
-            catch(Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
-                var tempAssets = new List<Models.Asset>
-                {
-                    new Models.Asset { Name = "Tesla", Ticker = "TSLA" },
-                    new Models.Asset { Name = "Apple", Ticker = "AAPL" },
-                };
-                return tempAssets;
-            }
+            var result = await assetService.FetchDataAsync<List<Models.Asset>>();
+            return result;
         }
         public async Task<Models.Stock> LoadPrice(string ticker)
         {
-            try
-            {
-                var url = $"https://localhost:7247/api/stocks/price?ticker={ticker}";
-                var response = await _httpClient.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var stockData = JsonSerializer.Deserialize<Models.Stock>(jsonResponse);
-
-                    if (stockData != null)
-                        return stockData;
-                }
-                else
-                {
-                    throw new Exception("Could not get stock data");
-                }
-            }
-            catch(Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Error", ex.Message, "Ok");
-            }
-            return new Models.Stock();
+            var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
+            return await stockService.FetchDataAsync(ticker);
         }
 
         public async Task LoadData(Models.Asset stock)
         {
-            try
-            {
-                IsLoading = true;
-                var url = $"https://localhost:7247/api/stocks/stockprice?ticker={stock.Ticker}&period={stock.Period}";
-                var response = await _httpClient.GetAsync(url);
+            IsLoading = true;
 
-                if(response.IsSuccessStatusCode)
+            var candleService = _apiServiceFactory.CreateService<List<Candle>>("candle");
+            var stockCandleData = await candleService.FetchDataAsync(stock);
+
+            if (stockCandleData.Count != 0)
+            {
+                stockCandleData = stockCandleData.OrderBy(c => c.Date).ToList();
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var stockCandleData = JsonSerializer.Deserialize<List<Models.Candle>>(jsonResponse);
-
-                    if(stockCandleData.Count != 0)
+                    Data.Clear();
+                    foreach (var data in stockCandleData)
                     {
-                        stockCandleData = stockCandleData.OrderBy(c => c.Date).ToList();
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
-                            Data.Clear();
-                            foreach (var data in stockCandleData)
-                            {
-                                Data.Add(data);
-
-                            }
-                        });
+                        Data.Add(data);
                     }
-                }
+                });
             }
-            catch
-            {
-                await Shell.Current.DisplayAlert("Error", "Could not get stock data", "Ok");
-            }
-            finally
-            {
-                IsLoading = false;
-            }
+            IsLoading = false;
         }
     }
 }

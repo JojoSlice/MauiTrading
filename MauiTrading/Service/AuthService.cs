@@ -10,10 +10,11 @@ namespace MauiTrading.Service
 {
     public class AuthService
     {
+
+        private readonly HttpClient _httpClient;
         private const string TokenKey = "AuthToken";
         public User? CurrentUser { get; private set; }
 
-        private readonly HttpClient _httpClient;
 
         public AuthService(HttpClient httpClient)
         {

@@ -24,6 +24,14 @@ namespace MauiTrading
 
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<Service.AuthService>();
+            builder.Services.AddSingleton<Service.ApiServiceFactory>();
+
+            builder.Services.AddKeyedScoped<Service.IApiService<List<Models.Candle>>, Service.CandleService>("candle");
+            builder.Services.AddKeyedScoped<Service.IApiService<Models.Stock>, Service.StocksService>("stocks");
+            builder.Services.AddKeyedScoped<Service.IApiService<Models.User>, Service.UserService>("user");
+            builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("trade");
+            builder.Services.AddKeyedScoped<Service.IApiService<List<Models.Asset>>, Service.AssetService>("asset");
+            builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("register");
 
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();

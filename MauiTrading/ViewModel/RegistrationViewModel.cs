@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiTrading.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace MauiTrading.ViewModel
 {
     public partial class RegistrationViewModel : ObservableObject
     {
-        private readonly HttpClient _httpClient;
+        private readonly ApiServiceFactory _apiServiceFactory;
 
 
         [ObservableProperty]
@@ -25,9 +26,9 @@ namespace MauiTrading.ViewModel
         [ObservableProperty]
         private string name;
 
-        public RegistrationViewModel(HttpClient httpClient)
+        public RegistrationViewModel(ApiServiceFactory apiServiceFactory)
         {
-            _httpClient = httpClient;
+            _apiServiceFactory = apiServiceFactory;
             RefresCanExecute();
         }
 
@@ -62,34 +63,11 @@ namespace MauiTrading.ViewModel
                 name = Name,
                 password = Password
             };
-
-            var json = JsonSerializer.Serialize(newUser);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
+            var registration = _apiServiceFactory.CreateService<bool>("register");
+            var result = await registration.FetchDataAsync(newUser);
+            if (result)
             {
-                var respons = await _httpClient.PostAsync("https://localhost:7247/api/users/register", content);
-                
-                if (respons == null)
-                    throw new Exception("Could not reach server, try again later.");
-
-                if (respons.IsSuccessStatusCode)
-                {
-                    await Shell.Current.DisplayAlert("Success", "User registered", "OK");
-
-                    await Shell.Current.GoToAsync("..");
-                }
-                else
-                {
-                    if (respons.StatusCode == System.Net.HttpStatusCode.Conflict)
-                        await Shell.Current.DisplayAlert("Error", "Username already taken.", "OK");
-                    else
-                        await Shell.Current.DisplayAlert("Error", "Failed to register", "OK");
-                }
-            }
-            catch(Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Network Error", "Could not reach server", "OK");
+                await Shell.Current.GoToAsync("..");
             }
         }
 

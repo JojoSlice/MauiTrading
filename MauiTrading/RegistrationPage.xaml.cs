@@ -1,4 +1,5 @@
-﻿using MauiTrading.ViewModel;
+﻿using MauiTrading.Service;
+using MauiTrading.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace MauiTrading
     public partial class RegistrationPage : ContentPage
     {
         private readonly RegistrationViewModel _viewModel;
-        public RegistrationPage(RegistrationViewModel viewModel)
+        private readonly ApiServiceFactory _apiServiceFactory;
+        public RegistrationPage(ApiServiceFactory apiServiceFactory)
         {
-            InitializeComponent();
-            _viewModel = viewModel;
+            _apiServiceFactory = apiServiceFactory;
+            _viewModel = new RegistrationViewModel(_apiServiceFactory);
             BindingContext = _viewModel;
+            InitializeComponent();
         }
     }
 }

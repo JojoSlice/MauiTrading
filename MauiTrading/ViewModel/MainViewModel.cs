@@ -31,7 +31,7 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         public async Task<bool> Login()
         {
-            AuthService.LoginDto loginDto = new AuthService.LoginDto { password = Password, username = Username };
+            AuthService.LoginDto loginDto = new() { password = Password, username = Username };
 
             return await _authService.LoginAsync(loginDto);
         }
