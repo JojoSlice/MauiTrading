@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 using CommunityToolkit.Maui.Core;
+using MauiTrading.Models;
 
 namespace MauiTrading
 {
@@ -23,6 +24,7 @@ namespace MauiTrading
 
 
             builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<Service.SeasonService>();
             builder.Services.AddSingleton<Service.AuthService>();
             builder.Services.AddSingleton<Service.ApiServiceFactory>();
 
@@ -32,6 +34,8 @@ namespace MauiTrading
             builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("trade");
             builder.Services.AddKeyedScoped<Service.IApiService<List<Models.Asset>>, Service.AssetService>("asset");
             builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("register");
+            builder.Services.AddKeyedScoped<Service.IApiService<List<TradeData>>, Service.TradeHistoryService>("tradehistory");
+            builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.CloseTradeService>("closetrade");
 
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();

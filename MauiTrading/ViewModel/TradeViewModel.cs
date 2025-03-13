@@ -20,7 +20,6 @@ namespace MauiTrading.ViewModel
     {
 
         private readonly ApiServiceFactory _apiServiceFactory;
-
         private Models.User userData;
 
         private double _stopLoss;
@@ -59,9 +58,12 @@ namespace MauiTrading.ViewModel
                 {
                     _selectedAsset = value;
                     OnPropertyChanged(nameof(SelectedAsset));
+                    OnPropertyChanged(nameof(SellPrice));
                 }
             }
         }
+        public double SellPrice => SelectedAsset != null ? SelectedAsset.Price - 5 : 0;
+
         private int _points;
         public int Points
         {
@@ -75,6 +77,20 @@ namespace MauiTrading.ViewModel
                 }
             }
         }
+        private double _avaiablePoints;
+        public double AvaiablePoints
+        {
+            get => _avaiablePoints;
+            set
+            {
+                if (_avaiablePoints != value)
+                {
+                    _avaiablePoints = value;
+                    OnPropertyChanged(nameof(AvaiablePoints));
+                }
+            }
+        }
+
         private Models.Asset _selectedOption;
         public Models.Asset SelectedOption
         {
@@ -85,8 +101,12 @@ namespace MauiTrading.ViewModel
                 {
                     _selectedOption = value;
                     OnPropertyChanged(nameof(SelectedOption));
-
                     OnSelectedOptionChanged(_selectedOption);
+
+                    Task.Run(async () =>
+                    {
+                        await LoadPrice(_selectedOption?.Ticker);
+                    });
                 }
             }
         }
@@ -105,7 +125,6 @@ namespace MauiTrading.ViewModel
             }
         }
 
-
         private bool _isLoading;
         public bool IsLoading
         {
@@ -116,6 +135,20 @@ namespace MauiTrading.ViewModel
                 {
                     _isLoading = value;
                     OnPropertyChanged(nameof(IsLoading));
+                }
+            }
+        }
+
+        private List<TradeData> _tradeHistory;
+        public List<TradeData> TradeHistory
+        {
+            get => _tradeHistory;
+            set
+            {
+                if(_tradeHistory != value)
+                {
+                    _tradeHistory = value;
+                    OnPropertyChanged(nameof(TradeHistory));
                 }
             }
         }
@@ -137,12 +170,19 @@ namespace MauiTrading.ViewModel
         private async void Initialize()
         {
             TradeOptions = await GetTradeOptions();
-            var user = await GetUser();
+            await UpdateUser();
 
             if (TradeOptions != null && TradeOptions.Count > 0)
             {
                 SelectedOption = TradeOptions[0];
             }
+        }
+
+        private async Task UpdateUser()
+        {
+            userData = await GetUser();
+            AvaiablePoints = userData.Points;
+            await LoadTradeHistory();
         }
         public async Task<Models.User> GetUser()
         {
@@ -159,21 +199,44 @@ namespace MauiTrading.ViewModel
         }
 
         [RelayCommand]
-        public async Task Buy()
+        async Task Buy()
         {
             var trade = BuildTrade(true);
-            await SaveTrade(trade);   
+            await SaveTrade(trade);
+
+            await Shell.Current.DisplayAlert("", "Trade made", "Ok");
         }
 
         [RelayCommand]
-        public async Task Sell()
+        async Task Sell()
         {
             var trade = BuildTrade(false);
             await SaveTrade(trade);   
+            await Shell.Current.DisplayAlert("", "Trade made", "Ok");
+        }
+
+        [RelayCommand]
+        async Task CloseTrade(TradeData trade)
+        {
+            if (trade != null)
+            {
+                var service = _apiServiceFactory.CreateService<bool>("closetrade");
+                var result = await service.FetchDataAsync(trade);
+                if (!result)
+                {
+                    await Shell.Current.DisplayAlert("Error", "Could not place trade", "Ok");
+                }
+                else
+                {
+                    await UpdateUser();
+                }
+            }
+
         }
 
         public Models.TradeData BuildTrade(bool isLong)
         {
+
             var trade = new Models.TradeData
             {
                 UserId = userData.Id,
@@ -196,12 +259,15 @@ namespace MauiTrading.ViewModel
             {
                 await Shell.Current.DisplayAlert("Error", "Could not place trade", "Ok");
             }
+            else
+            {
+                await UpdateUser();
+            }
         }
         
         private async Task LoadDataAsync(Models.Asset value)
         {
             await LoadData(value);
-            _selectedAsset = await LoadPrice(value.Ticker);
         }
         public async Task<List<Models.Asset>> GetTradeOptions()
         {
@@ -210,10 +276,11 @@ namespace MauiTrading.ViewModel
             var result = await assetService.FetchDataAsync<List<Models.Asset>>();
             return result;
         }
-        public async Task<Models.Stock> LoadPrice(string ticker)
+        public async Task LoadPrice(string ticker)
         {
             var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
-            return await stockService.FetchDataAsync(ticker);
+            var stock = await stockService.FetchDataAsync(ticker);
+            SelectedAsset = stock;
         }
 
         public async Task LoadData(Models.Asset stock)
@@ -236,6 +303,21 @@ namespace MauiTrading.ViewModel
                 });
             }
             IsLoading = false;
+        }
+        public async Task LoadTradeHistory()
+        {
+            var service = _apiServiceFactory.CreateService<List<TradeData>>("tradehistory");
+            var tradeHistoryData = await service.FetchDataAsync(userData.Id);
+
+            if (tradeHistoryData.Count != 0)
+            {
+                tradeHistoryData.OrderByDescending(t => t.TradeDate);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    TradeHistory.Clear();
+                    TradeHistory.AddRange(tradeHistoryData);
+                });
+            }
         }
     }
 }

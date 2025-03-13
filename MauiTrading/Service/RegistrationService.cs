@@ -10,12 +10,10 @@ namespace MauiTrading.Service
     public class RegistrationService : IApiService<bool>
     {
         private readonly HttpClient _httpClient;
-        private readonly AuthService _authService;
 
-        public RegistrationService(HttpClient httpClient, AuthService authService)
+        public RegistrationService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _authService = authService;
         }
 
         public async Task<bool> FetchDataAsync<Tparam>(Tparam newUser)

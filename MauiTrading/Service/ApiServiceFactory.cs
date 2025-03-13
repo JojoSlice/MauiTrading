@@ -21,9 +21,11 @@ namespace MauiTrading.Service
                 "user" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("user"),
                 "trade" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("trade"),
                 "asset" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("asset"),
-                "stock" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("stocks"),
+                "stocks" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("stocks"),
                 "candle" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("candle"),
                 "register" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("register"),
+                "tradehistory" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("tradehistory"),
+                "closetrade" => _serviceProvider.GetRequiredKeyedService<IApiService<T>>("closetrade"),
                 _ => throw new ArgumentException($"Service of type '{type}' not found")
             };
         }
