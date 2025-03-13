@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MauiTrading.Service
 {
-    class SeasonService
+    public class SeasonService
     {
         private static SeasonService _instance;
         private static readonly object _lock = new();
@@ -19,9 +19,10 @@ namespace MauiTrading.Service
         private SeasonService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            _ = LoadSeason();
         }
 
-        public static async Task<SeasonService> GetInstance(HttpClient httpClient)
+        public static SeasonService GetInstance(HttpClient httpClient)
         {
             if (_instance == null)
             {
@@ -34,12 +35,12 @@ namespace MauiTrading.Service
                 }
             }
 
-            if (_instance._season == null)
-            {
-                _instance._season = await _instance.GetCurrentSeason();
-            }
-
             return _instance;
+        }
+
+        public async Task LoadSeason()
+        {
+            _season = await GetCurrentSeason();
         }
 
         public async Task<Models.Season> GetCurrentSeason()

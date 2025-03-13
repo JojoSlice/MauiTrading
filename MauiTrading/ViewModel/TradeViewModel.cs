@@ -18,7 +18,7 @@ namespace MauiTrading.ViewModel
 {
     public partial class TradeViewModel : INotifyPropertyChanged
     {
-
+        private readonly SeasonService _seasonService;
         private readonly ApiServiceFactory _apiServiceFactory;
         private Models.User userData;
 
@@ -139,8 +139,8 @@ namespace MauiTrading.ViewModel
             }
         }
 
-        private List<TradeData> _tradeHistory;
-        public List<TradeData> TradeHistory
+        private ObservableCollection<TradeData> _tradeHistory = new ObservableCollection<TradeData>();
+        public ObservableCollection<TradeData> TradeHistory
         {
             get => _tradeHistory;
             set
@@ -161,9 +161,10 @@ namespace MauiTrading.ViewModel
         
         public ObservableCollection<Models.Candle> Data { get; set; } = new ObservableCollection<Models.Candle>();
         
-        public TradeViewModel(ApiServiceFactory apiServiceFactory)
+        public TradeViewModel(ApiServiceFactory apiServiceFactory, SeasonService seasonService)
         {
             _apiServiceFactory = apiServiceFactory;
+            _seasonService = seasonService;
             Initialize();
         }
 
@@ -236,10 +237,10 @@ namespace MauiTrading.ViewModel
 
         public Models.TradeData BuildTrade(bool isLong)
         {
-
             var trade = new Models.TradeData
             {
                 UserId = userData.Id,
+                SeasonId = _seasonService.Season.Id,
                 Ticker = SelectedAsset.Ticker,
                 Price = SelectedAsset.Price,
                 IsLong = isLong,
@@ -309,13 +310,17 @@ namespace MauiTrading.ViewModel
             var service = _apiServiceFactory.CreateService<List<TradeData>>("tradehistory");
             var tradeHistoryData = await service.FetchDataAsync(userData.Id);
 
-            if (tradeHistoryData.Count != 0)
+            if (tradeHistoryData != null && tradeHistoryData.Count > 0)
             {
-                tradeHistoryData.OrderByDescending(t => t.TradeDate);
+                tradeHistoryData = tradeHistoryData.OrderByDescending(t => t.TradeDate).ToList();
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    TradeHistory.Clear();
-                    TradeHistory.AddRange(tradeHistoryData);
+                    TradeHistory?.Clear();
+
+                    foreach (var trade in tradeHistoryData)
+                    {
+                        TradeHistory.Add(trade);
+                    }
                 });
             }
         }

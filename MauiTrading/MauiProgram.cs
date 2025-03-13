@@ -24,7 +24,7 @@ namespace MauiTrading
 
 
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<Service.SeasonService>();
+            builder.Services.AddSingleton(sp => Service.SeasonService.GetInstance(sp.GetRequiredService<HttpClient>()));
             builder.Services.AddSingleton<Service.AuthService>();
             builder.Services.AddSingleton<Service.ApiServiceFactory>();
 
@@ -48,6 +48,7 @@ namespace MauiTrading
 
             builder.Services.AddTransient<TradePage>();
             builder.Services.AddTransient<TradeViewModel>();
+
 
 #if DEBUG
     		builder.Logging.AddDebug();

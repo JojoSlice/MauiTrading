@@ -2,63 +2,71 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiTrading.TradePage"
+             xmlns:models="clr-namespace:MauiTrading.Models"
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              x:DataType="viewmodel:TradeViewModel"
+             
              Title="">
-    <VerticalStackLayout>
-        
-        <Picker Title="Select asset" 
+    <ContentPage.BindingContext>
+        <viewmodel:TradeViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+
+        <VerticalStackLayout>
+
+            <Picker Title="Select asset" 
                 TextColor="{StaticResource Secondary}" 
                 BackgroundColor="{StaticResource PrimaryDark}" 
                 FontAutoScalingEnabled="True" 
                 ItemsSource="{Binding TradeOptions}"
                 SelectedItem="{Binding SelectedOption}"
                 ItemDisplayBinding="{Binding Name}"/>
-        
-        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
-        
-        <Border StrokeThickness="1" 
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+
+            <Border StrokeThickness="1" 
                         Stroke="{StaticResource PrimaryDark}" 
                         Padding="10" 
                         Background="{StaticResource PrimaryDark}"
                         Grid.Column="0"
                         Grid.Row="0">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="5"/>
-            </Border.StrokeShape>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
 
 
-            <chart:SfCartesianChart
+                <chart:SfCartesianChart
                                 Grid.Column="0"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="4">
 
-                <chart:SfCartesianChart.XAxes>
-                    <chart:CategoryAxis>
-                        <chart:CategoryAxis.Title>
-                            <chart:ChartAxisTitle Text="Date" TextColor="{StaticResource Secondary}"/>
-                        </chart:CategoryAxis.Title>
-                    </chart:CategoryAxis>
-                </chart:SfCartesianChart.XAxes>
+                    <chart:SfCartesianChart.XAxes>
+                        <chart:CategoryAxis>
+                            <chart:CategoryAxis.Title>
+                                <chart:ChartAxisTitle Text="Date" TextColor="{StaticResource Secondary}"/>
+                            </chart:CategoryAxis.Title>
+                        </chart:CategoryAxis>
+                    </chart:SfCartesianChart.XAxes>
 
-                <chart:SfCartesianChart.YAxes>
-                    <chart:NumericalAxis>
-                        <chart:NumericalAxis.PlotBands>
-                            <chart:NumericalPlotBandCollection>
-                                <chart:NumericalPlotBand 
+                    <chart:SfCartesianChart.YAxes>
+                        <chart:NumericalAxis>
+                            <chart:NumericalAxis.PlotBands>
+                                <chart:NumericalPlotBandCollection>
+                                    <chart:NumericalPlotBand 
                                     Start="{Binding SelectedAsset.Price}"
                                     End="{Binding SellPrice}"
                                     Fill="Red"/>
-                            </chart:NumericalPlotBandCollection>
-                        </chart:NumericalAxis.PlotBands>
-                        <chart:NumericalAxis.Title>
-                            <chart:ChartAxisTitle Text="Price" TextColor="{StaticResource Secondary}"/>
-                        </chart:NumericalAxis.Title>
-                    </chart:NumericalAxis>
-                </chart:SfCartesianChart.YAxes>
+                                </chart:NumericalPlotBandCollection>
+                            </chart:NumericalAxis.PlotBands>
+                            <chart:NumericalAxis.Title>
+                                <chart:ChartAxisTitle Text="Price" TextColor="{StaticResource Secondary}"/>
+                            </chart:NumericalAxis.Title>
+                        </chart:NumericalAxis>
+                    </chart:SfCartesianChart.YAxes>
 
-                <chart:CandleSeries ItemsSource="{Binding Data}"
+                    <chart:CandleSeries ItemsSource="{Binding Data}"
                         XBindingPath="Date"
                         Open="Open"
                         High="High"
@@ -66,56 +74,81 @@
                         Close="Close"
                         EnableSolidCandle="true"/>
 
-            </chart:SfCartesianChart>
-            
-        </Border>
-        <Grid RowDefinitions="auto, auto"
+                </chart:SfCartesianChart>
+
+            </Border>
+            <Grid RowDefinitions="auto, auto, auto"
               ColumnDefinitions="auto, auto, auto, auto"
               Padding="10"
               ColumnSpacing="10">
-            
-            <Button Text="Buy"
+
+                <Button Text="Buy"
                     Command="{Binding BuyCommand}"
                     Grid.Column="0"/>
-            <Button Text="Sell"
+                <Button Text="Sell"
                     Command="{Binding SellCommand}"
                     Grid.Column="1"/>
-            <Label Text="{Binding SelectedAsset.Price, StringFormat='Price: {0:F2}'}"
+                <Label Text="{Binding SelectedAsset.Price, StringFormat='Price: {0:F2}'}"
                    Grid.Column="2"/>
-            <Entry Placeholder="TakeProfit level"
-                   Text="{Binding TakeProfit, StringFormat='TP: {0}'}"
-                   Grid.Row="1"/>
-            <Entry Placeholder="StopLoss level"
-                   Text="{Binding StopLoss, StringFormat='SL: {0}'}"
+                <Label Text="TakeProfit"
+                   Grid.Row="1"
+                   Grid.Column="0"/>
+                <Label Text="StopLoss"
                    Grid.Row="1"
                    Grid.Column="1"/>
-            <Entry Placeholder="Points to use"
-                   Text="{Binding Points, StringFormat='Points: {0}'}"
+                <Label Text="Points"
                    Grid.Row="1"
                    Grid.Column="2"/>
-            <Label Text="{Binding AvaiablePoints, StringFormat='Points avaiable: {0}'}"
-                   Grid.Row="1"
+                <Entry Placeholder="TakeProfit"
+                   Text="{Binding TakeProfit, Mode=TwoWay}"
+                   TextColor="Blue"
+                   Grid.Row="2"/>
+                <Entry Placeholder="StopLoss"
+                   Text="{Binding StopLoss, Mode=TwoWay}"
+                   TextColor="Red"
+                   Grid.Row="2"
+                   Grid.Column="1"/>
+                <Entry Placeholder="Points"
+                   Text="{Binding Points, Mode=TwoWay}"
+                   TextColor="Black"
+                   Grid.Row="2"
+                   Grid.Column="2"/>
+                <Label Text="{Binding AvaiablePoints, StringFormat='Points avaiable: {0}'}"
+                   Grid.Row="2"
                    Grid.Column="3"/>
-        </Grid>
+            </Grid>
 
-        <Label Text="Trade History:"/>
-        
-        <CollectionView ItemsSource="{Binding TradeHistory}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Padding="10" Margin="5" Stroke="{StaticResource PrimaryDark}" BackgroundColor="{StaticResource PrimaryDark}">
-                        <Grid Padding="10" Margin="5" RowSpacing="5" RowDefinitions="auto, auto" ColumnSpacing="5" ColumnDefinitions="auto, auto, auto">
-                            <Label Text="{Binding Ticker}" Grid.Column="0" Grid.Row="0"/>
-                            <Label Text="{Binding IsLong, StringFormat='Long: {0}'}" Grid.Column="1" Grid.Row="0"/>
-                            <Button Text="Close Trade" Command="{Binding CloseTradeCommand}" IsVisible="{Binding IsOpen}" Grid.Column="2" Grid.Row="0"/>
-                            <Label Text="{Binding Price, StringFormat='Open Price: {0}'}" Grid.Column="0" Grid.Row="1"/>
-                            <Label Text="{Binding ClosingPrice, StringFormat='Closing Price: {0}'}" IsVisible="{Binding ClosingPrice}" Grid.Column="1" Grid.Row="1"/>
-                            <Label Text="{Binding PnLPercent, StringFormat='PnL: {0:F2}%'}" Grid.Column="2" Grid.Row="1"/>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            
-        </CollectionView>
-    </VerticalStackLayout>
+            <Label Text="Trade History:"/>
+
+            <CollectionView ItemsSource="{Binding TradeHistory}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:TradeData">
+                        <Border Padding="10" Margin="5" Stroke="{StaticResource PrimaryDark}" BackgroundColor="{StaticResource PrimaryDark}">
+                            <Grid Padding="10" Margin="10" RowSpacing="5" RowDefinitions="auto, auto" ColumnSpacing="5" ColumnDefinitions="auto, auto, auto">
+                                
+                                <Label Text="{Binding Ticker}" Grid.Column="0" Grid.Row="0"/>
+                                
+                                <Label Text="{Binding IsLong, StringFormat='Long: {0}'}" Grid.Column="1" Grid.Row="0"/>
+                                
+                                <Button Text="Close Trade" Command="{Binding Source={x:Reference TradeViewModel}, Path=CloseTradeComamnd}" CommandParameter="{Binding}" IsVisible="{Binding IsOpen}" Grid.Column="2" Grid.Row="0"/>
+                                
+                                <Label Text="{Binding Price, StringFormat='Open Price: {0:F2}'}" Grid.Column="0" Grid.Row="1"/>
+                                
+                                <Label Text="{Binding ClosingPrice, StringFormat='Closing Price: {0:F2}'}" Grid.Column="1" Grid.Row="1">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ClosingPrice}" Value="{x:Null}">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                
+                                <Label Text="{Binding PnLPercent, StringFormat='PnL: {0:F2}%'}" Grid.Column="2" Grid.Row="1"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
