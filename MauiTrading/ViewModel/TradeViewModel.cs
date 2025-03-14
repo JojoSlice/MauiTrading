@@ -14,11 +14,13 @@ using System.Net;
 using MauiTrading.Models;
 using System.Reflection;
 using System.Collections.Specialized;
+using MauiTrading.Helpers;
 
 namespace MauiTrading.ViewModel
 {
     public partial class TradeViewModel : INotifyPropertyChanged
     {
+        private readonly LoadTradeHistory _loadTradeHistory;
         private readonly SeasonService _seasonService;
         private readonly ApiServiceFactory _apiServiceFactory;
         private Models.User userData;
@@ -162,8 +164,9 @@ namespace MauiTrading.ViewModel
         
         public ObservableCollection<Models.Candle> Data { get; set; } = new ObservableCollection<Models.Candle>();
         
-        public TradeViewModel(ApiServiceFactory apiServiceFactory, SeasonService seasonService)
+        public TradeViewModel(ApiServiceFactory apiServiceFactory, SeasonService seasonService, LoadTradeHistory loadTradeHistory)
         {
+            _loadTradeHistory = loadTradeHistory;
             _apiServiceFactory = apiServiceFactory;
             _seasonService = seasonService;
             Initialize();
@@ -313,12 +316,10 @@ namespace MauiTrading.ViewModel
         }
         public async Task LoadTradeHistory()
         {
-            var service = _apiServiceFactory.CreateService<List<TradeData>>("tradehistory");
-            var tradeHistoryData = await service.FetchDataAsync(userData.Id);
+            var tradeHistoryData = await _loadTradeHistory.LoadHistory();
 
-            if (tradeHistoryData != null && tradeHistoryData.Count > 0)
+            if (tradeHistoryData != null && tradeHistoryData.Count >= 0)
             {
-                tradeHistoryData = tradeHistoryData.OrderByDescending(t => t.TradeDate).ToList();
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     TradeHistory?.Clear();

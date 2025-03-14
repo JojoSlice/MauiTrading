@@ -178,7 +178,6 @@
                                         <Button 
                                             Text="Close Trade" 
                                             Command="{Binding CloseTradeCommand}" 
-                                            IsVisible="{Binding IsOpen}" 
                                             Grid.Column="3" 
                                             Grid.RowSpan="2"/>
 
@@ -191,18 +190,14 @@
                                             Text="{Binding PriceNow, StringFormat='Price Now: {0:F2}'}" 
                                             Grid.Column="1" 
                                             Grid.Row="1"/>
-
                                         <Label 
-                                            Text="{Binding ClosingPrice, StringFormat='Closing Price: {0:F2}'}" 
-                                            Grid.Column="2" 
-                                            Grid.Row="1" 
-                                            IsVisible="{Binding IsClosed}"/>
+                                            Text="{Binding TakeProfit, StringFormat='TakeProfit: {0}'}"
+                                            Grid.Column="2"/>
+                                        <Label
+                                            Text="{Binding StopLoss, StringFormat='StopLoss: {0}'}"
+                                            Grid.Column="2"
+                                            Grid.Row="1"/>
 
-                                        <Label 
-                                            Text="{Binding PnLPercent, StringFormat='PnL: {0:F2}%'}" 
-                                            Grid.Column="3" 
-                                            Grid.Row="1" 
-                                            IsVisible="{Binding IsClosed}"/>
                                     </Grid>
                                 </Border>
                             </VerticalStackLayout>

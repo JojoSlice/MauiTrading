@@ -27,6 +27,7 @@ namespace MauiTrading
             builder.Services.AddSingleton(sp => Service.SeasonService.GetInstance(sp.GetRequiredService<HttpClient>()));
             builder.Services.AddSingleton<Service.AuthService>();
             builder.Services.AddSingleton<Service.ApiServiceFactory>();
+            builder.Services.AddSingleton<Helpers.LoadTradeHistory>();
 
             builder.Services.AddKeyedScoped<Service.IApiService<List<Models.Candle>>, Service.CandleService>("candle");
             builder.Services.AddKeyedScoped<Service.IApiService<Models.Stock>, Service.StocksService>("stocks");
