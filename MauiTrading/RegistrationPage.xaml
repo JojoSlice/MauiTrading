@@ -4,16 +4,6 @@
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
              x:DataType="viewmodel:RegistrationViewModel">
    
-    <ContentPage.Resources>
-        <LinearGradientBrush x:Key="GradientBrush"
-                             StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
-            <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
-            <GradientStop Color="Transparent" Offset="0.01"/>
-        </LinearGradientBrush>
-
-    </ContentPage.Resources>
-
     <Grid>
         <Grid Background ="{StaticResource GradientBrush}"/>
         <Grid RowDefinitions="*, 350, 400"
@@ -25,23 +15,24 @@
         
        
         <Grid RowDefinitions="*, Auto, Auto, Auto, Auto, Auto, 50"
-            ColumnDefinitions=".40*, AUTO, .50*"
+            ColumnDefinitions=".20*, .30*, Auto, .10*"
             Padding="10"
             RowSpacing="10"
             ColumnSpacing="10">
             
             
-            <BoxView Color="White"
+            <BoxView Color="#70808090"
                      
-                   Opacity="0.1"
                      Grid.Row="1"
-                   Grid.RowSpan="5"
-                   Grid.Column="0"/>
+                   Grid.RowSpan="4"
+                   Grid.Column="0"
+                     CornerRadius="5"/>
 
             <Label Text="Must be 5 to 20 characters long.&#10;No spaces or special characters (except _)."
                   TextColor="Black" 
                   HorizontalTextAlignment="Center"
-                  FontSize="10"
+                  FontSize="11"
+                  FontAttributes="Bold"
                   Grid.Row="1"
                    Padding="2"/>
 
@@ -57,7 +48,8 @@
             <Label Text="Should contain first name and last name.&#10;First letter of each name should be capitalized."
                    TextColor="Black"
                   HorizontalTextAlignment="Center"
-                   FontSize="10"
+                   FontSize="11"
+                  FontAttributes="Bold"
                    Grid.Row="2"
                    Padding="2"/>
 
@@ -69,10 +61,11 @@
            Grid.Column="1"
            Grid.ColumnSpan="2"/>
 
-            <Label Text="Must be at least 8 characters long.&#10;Must contain at least one uppercase, lowercase, number and special character.&#10;No spaces allowed."
+            <Label Text="Must be at least 8 characters long.&#10;Must contain at least one:&#10; uppercase, lowercase, number and special character.&#10;No spaces allowed."
                    TextColor="Black"
                   HorizontalTextAlignment="Center"
-                   FontSize="10"
+                   FontSize="11"
+                  FontAttributes="Bold"
                    Grid.Row="3"
                    Grid.RowSpan="2"
                    Padding="2"/>
@@ -98,24 +91,12 @@
             <Button Text="Confirm"
                 Grid.Row="5"
                 Grid.Column="1"
-                Command="{Binding ConfirmCommand}"
-                BorderColor="{StaticResource Secondary}"
-                BorderWidth="0.5">
-                <Button.Shadow>
-                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
-                </Button.Shadow>
-            </Button>
+                Command="{Binding ConfirmCommand}"/>
 
             <Button Text="Cancel"
                 Grid.Row="5"
                 Grid.Column="2"
-                Command="{Binding CancelCommand}"
-                BorderColor="{StaticResource Secondary}"
-                BorderWidth="0.5">
-                <Button.Shadow>
-                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
-                </Button.Shadow>
-            </Button>
+                Command="{Binding CancelCommand}"/>
 
         </Grid>
     </Grid>

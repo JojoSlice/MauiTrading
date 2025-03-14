@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Net;
 using MauiTrading.Models;
 using System.Reflection;
+using System.Collections.Specialized;
 
 namespace MauiTrading.ViewModel
 {
@@ -145,7 +146,7 @@ namespace MauiTrading.ViewModel
             get => _tradeHistory;
             set
             {
-                if(_tradeHistory != value)
+                if (_tradeHistory != value)
                 {
                     _tradeHistory = value;
                     OnPropertyChanged(nameof(TradeHistory));
@@ -178,7 +179,6 @@ namespace MauiTrading.ViewModel
                 SelectedOption = TradeOptions[0];
             }
         }
-
         private async Task UpdateUser()
         {
             userData = await GetUser();
@@ -216,7 +216,6 @@ namespace MauiTrading.ViewModel
             await Shell.Current.DisplayAlert("", "Trade made", "Ok");
         }
 
-        [RelayCommand]
         async Task CloseTrade(TradeData trade)
         {
             if (trade != null)
@@ -283,6 +282,13 @@ namespace MauiTrading.ViewModel
             var stock = await stockService.FetchDataAsync(ticker);
             SelectedAsset = stock;
         }
+        public async Task<Double> GetPrice(string ticker)
+        {
+            var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
+            var stock = await stockService.FetchDataAsync(ticker);
+
+            return stock.Price;
+        }
 
         public async Task LoadData(Models.Asset stock)
         {
@@ -313,13 +319,28 @@ namespace MauiTrading.ViewModel
             if (tradeHistoryData != null && tradeHistoryData.Count > 0)
             {
                 tradeHistoryData = tradeHistoryData.OrderByDescending(t => t.TradeDate).ToList();
-                MainThread.BeginInvokeOnMainThread(() =>
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     TradeHistory?.Clear();
 
                     foreach (var trade in tradeHistoryData)
                     {
-                        TradeHistory.Add(trade);
+                        if (trade.IsOpen)
+                        {
+                            trade.PriceNow = await GetPrice(trade.Ticker);
+                            TradeHistory.Add(trade);
+                        }
+                    }
+                    foreach (var trade in TradeHistory)
+                    {
+                        trade.CloseTradeRequested += async (sender, args) =>
+                        {
+                            var tradeData = sender as TradeData;
+                            if (tradeData != null)
+                            {
+                                await CloseTrade(tradeData);
+                            }
+                        };
                     }
                 });
             }

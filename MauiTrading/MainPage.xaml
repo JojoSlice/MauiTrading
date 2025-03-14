@@ -5,15 +5,7 @@
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
              x:DataType="viewmodel:MainViewModel"
              Title="">
-    <ContentPage.Resources>
-        <LinearGradientBrush x:Key="GradientBrush"
-                             StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
-            <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
-            <GradientStop Color="Transparent" Offset="0.01"/>
-        </LinearGradientBrush>
-    </ContentPage.Resources>
-
+  
     <Grid>
 
         <Grid Background ="{StaticResource GradientBrush}"/>
@@ -47,25 +39,13 @@
             <Button Text="Log in"
                 Command="{Binding LoginCommand}"
                 Grid.Row="3"
-                Grid.Column="1"
-                BorderColor="{StaticResource PrimaryDark}"
-                BorderWidth="0.5">
-                <Button.Shadow>
-                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
-                </Button.Shadow>
-            </Button>
+                Grid.Column="1"/>
 
             <Button Text="Register"
                 Command="{Binding RegisterCommand}"
                 Grid.Row="4"
-                Grid.Column="1"
-                BorderColor="{StaticResource PrimaryDark}"
-                BorderWidth="0.5">
-                <Button.Shadow>
-                    <Shadow Brush="{StaticResource PrimaryDark}" Offset="5,5" Radius="20" Opacity="1"/>
-                </Button.Shadow>
-            </Button>
-            
+                Grid.Column="1"/>
+
         </Grid>
     </Grid>
 </ContentPage>

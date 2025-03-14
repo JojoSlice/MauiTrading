@@ -5,15 +5,7 @@
              xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              x:DataType="viewmodel:HomeViewModel">
-    <ContentPage.Resources>
-        <LinearGradientBrush x:Key="GradientBrush"
-                             StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="{StaticResource PrimaryDark}" Offset="1"/>
-            <GradientStop Color="{StaticResource SecondaryDarkText}" Offset="0.8"/>
-            <GradientStop Color="Transparent" Offset="0.01"/>
-        </LinearGradientBrush>
-    </ContentPage.Resources>
-    
+        
     <Grid>
         <Grid Background="{x:StaticResource GradientBrush}"/>
         <Grid RowDefinitions="*, 350, 400"
@@ -29,9 +21,9 @@
                 Spacing="10">
 
                 <Border StrokeThickness="1" 
-                        Stroke="#80808080" 
+                        Stroke="#70808090" 
                         Padding="10" 
-                        Background="#80808090"
+                        Background="#70808090"
                         Grid.Column="0"
                         Grid.Row="0">
                     <Border.StrokeShape>

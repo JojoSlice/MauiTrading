@@ -8,17 +8,13 @@
              x:DataType="viewmodel:TradeViewModel"
              
              Title="">
-    <ContentPage.BindingContext>
-        <viewmodel:TradeViewModel/>
-    </ContentPage.BindingContext>
-    
-    <ScrollView>
+    <ScrollView Background="{x:StaticResource GradientBrush}">
 
-        <VerticalStackLayout>
+        <VerticalStackLayout Padding="5" Margin="5">
 
             <Picker Title="Select asset" 
                 TextColor="{StaticResource Secondary}" 
-                BackgroundColor="{StaticResource PrimaryDark}" 
+                BackgroundColor="#70808090" 
                 FontAutoScalingEnabled="True" 
                 ItemsSource="{Binding TradeOptions}"
                 SelectedItem="{Binding SelectedOption}"
@@ -27,11 +23,13 @@
             <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
 
             <Border StrokeThickness="1" 
-                        Stroke="{StaticResource PrimaryDark}" 
-                        Padding="10" 
-                        Background="{StaticResource PrimaryDark}"
-                        Grid.Column="0"
-                        Grid.Row="0">
+                    Stroke= "#70808090"
+                    Padding="10" 
+                    Margin="5"
+                    Background="#70808090"
+                    Grid.Column="0"
+                    Grid.Row="0">
+
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="5"/>
                 </Border.StrokeShape>
@@ -75,80 +73,143 @@
                         EnableSolidCandle="true"/>
 
                 </chart:SfCartesianChart>
-
             </Border>
-            <Grid RowDefinitions="auto, auto, auto"
-              ColumnDefinitions="auto, auto, auto, auto"
-              Padding="10"
-              ColumnSpacing="10">
 
-                <Button Text="Buy"
-                    Command="{Binding BuyCommand}"
-                    Grid.Column="0"/>
-                <Button Text="Sell"
-                    Command="{Binding SellCommand}"
-                    Grid.Column="1"/>
-                <Label Text="{Binding SelectedAsset.Price, StringFormat='Price: {0:F2}'}"
-                   Grid.Column="2"/>
-                <Label Text="TakeProfit"
-                   Grid.Row="1"
-                   Grid.Column="0"/>
-                <Label Text="StopLoss"
-                   Grid.Row="1"
-                   Grid.Column="1"/>
-                <Label Text="Points"
-                   Grid.Row="1"
-                   Grid.Column="2"/>
-                <Entry Placeholder="TakeProfit"
-                   Text="{Binding TakeProfit, Mode=TwoWay}"
-                   TextColor="Blue"
-                   Grid.Row="2"/>
-                <Entry Placeholder="StopLoss"
-                   Text="{Binding StopLoss, Mode=TwoWay}"
-                   TextColor="Red"
-                   Grid.Row="2"
-                   Grid.Column="1"/>
-                <Entry Placeholder="Points"
-                   Text="{Binding Points, Mode=TwoWay}"
-                   TextColor="Black"
-                   Grid.Row="2"
-                   Grid.Column="2"/>
-                <Label Text="{Binding AvaiablePoints, StringFormat='Points avaiable: {0}'}"
-                   Grid.Row="2"
-                   Grid.Column="3"/>
-            </Grid>
+                <Label Text="Trade Station" FontSize="12" FontAttributes="Bold"/>
+            <HorizontalStackLayout>
+                <Border StrokeThickness="1" 
+                    Stroke= "#70808090"
+                    Padding="10" 
+                    Margin="5"
+                    Background="#70808090">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
 
-            <Label Text="Trade History:"/>
+                    <Grid
+                    RowDefinitions="auto, auto, auto, auto"
+                    ColumnDefinitions="auto, auto, auto, auto"
+                    Margin="5"
+                    Padding="5"
+                    ColumnSpacing="10">
 
-            <CollectionView ItemsSource="{Binding TradeHistory}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:TradeData">
-                        <Border Padding="10" Margin="5" Stroke="{StaticResource PrimaryDark}" BackgroundColor="{StaticResource PrimaryDark}">
-                            <Grid Padding="10" Margin="10" RowSpacing="5" RowDefinitions="auto, auto" ColumnSpacing="5" ColumnDefinitions="auto, auto, auto">
-                                
-                                <Label Text="{Binding Ticker}" Grid.Column="0" Grid.Row="0"/>
-                                
-                                <Label Text="{Binding IsLong, StringFormat='Long: {0}'}" Grid.Column="1" Grid.Row="0"/>
-                                
-                                <Button Text="Close Trade" Command="{Binding Source={x:Reference TradeViewModel}, Path=CloseTradeComamnd}" CommandParameter="{Binding}" IsVisible="{Binding IsOpen}" Grid.Column="2" Grid.Row="0"/>
-                                
-                                <Label Text="{Binding Price, StringFormat='Open Price: {0:F2}'}" Grid.Column="0" Grid.Row="1"/>
-                                
-                                <Label Text="{Binding ClosingPrice, StringFormat='Closing Price: {0:F2}'}" Grid.Column="1" Grid.Row="1">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding ClosingPrice}" Value="{x:Null}">
-                                            <Setter Property="IsVisible" Value="False"/>
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                                
-                                <Label Text="{Binding PnLPercent, StringFormat='PnL: {0:F2}%'}" Grid.Column="2" Grid.Row="1"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                        <Button Text="Buy"
+                                Command="{Binding BuyCommand}"
+                                Grid.Column="0"
+                                Grid.RowSpan="2"/>
+                        
+                        <Button Text="Sell"
+                                Command="{Binding SellCommand}"
+                                Grid.Column="1"
+                                Grid.RowSpan="2"/>
+                        
+                        <Label  Text="{Binding SelectedAsset.Price, StringFormat='Price: {0:F2}'}"
+                                Grid.Column="2"/>
+                        
+                        <Label  Text="TakeProfit"
+                                Grid.Row="2"
+                                Grid.Column="0"/>
+                        
+                        <Label  Text="StopLoss"
+                                Grid.Row="2"
+                                Grid.Column="1"/>
+                        
+                        <Label  Text="Points"
+                                Grid.Row="2"
+                                Grid.Column="2"/>
+                        
+                        <Entry  Placeholder="TakeProfit"
+                                Text="{Binding TakeProfit, Mode=TwoWay}"
+                                TextColor="Blue"
+                                Grid.Row="3"/>
+                        
+                        <Entry  Placeholder="StopLoss"
+                                Text="{Binding StopLoss, Mode=TwoWay}"
+                                TextColor="Red"
+                                Grid.Row="3"
+                                Grid.Column="1"/>
+                        
+                        <Entry  Placeholder="Points"
+                                Text="{Binding Points, Mode=TwoWay}"
+                                TextColor="Black"
+                                Grid.Row="3"
+                                Grid.Column="2"/>
+                        
+                        <Label  Text="{Binding AvaiablePoints, StringFormat='Points avaiable: {0}'}"
+                                Grid.Row="1"
+                                Grid.Column="2"/>
+                    </Grid>
+                </Border>
+            </HorizontalStackLayout>
 
-            </CollectionView>
+            <HorizontalStackLayout>
+                <CollectionView ItemsSource="{Binding TradeHistory}" Margin="5">
+                    <CollectionView.Header>
+                        <Label Text="Active Trades" FontSize="12" FontAttributes="Bold"/>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TradeData">
+                            <VerticalStackLayout Spacing="5" Padding="1" Margin="5" BackgroundColor="#00000000">
+                                <Border StrokeThickness="1" 
+                    Stroke= "#70808090"
+                    Padding="10" 
+                    Margin="5"
+                    Background="#70808090">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5"/>
+                                    </Border.StrokeShape>
+                                    <Grid 
+                                        RowSpacing="5"
+                                        RowDefinitions="auto, auto" 
+                                        ColumnSpacing="20" 
+                                        ColumnDefinitions="auto, auto, auto, auto">
+
+                                        <Label 
+                                            Text="{Binding Ticker}" 
+                                            Grid.Column="0" 
+                                            Grid.Row="0"/>
+
+                                        <Label 
+                                            Text="{Binding IsLong, StringFormat='Long: {0}'}" 
+                                            Grid.Column="1" 
+                                            Grid.Row="0"/>
+
+                                        <Button 
+                                            Text="Close Trade" 
+                                            Command="{Binding CloseTradeCommand}" 
+                                            IsVisible="{Binding IsOpen}" 
+                                            Grid.Column="3" 
+                                            Grid.RowSpan="2"/>
+
+                                        <Label 
+                                            Text="{Binding Price, StringFormat='Open Price: {0:F2}'}" 
+                                            Grid.Column="0" 
+                                            Grid.Row="1"/>
+
+                                        <Label 
+                                            Text="{Binding PriceNow, StringFormat='Price Now: {0:F2}'}" 
+                                            Grid.Column="1" 
+                                            Grid.Row="1"/>
+
+                                        <Label 
+                                            Text="{Binding ClosingPrice, StringFormat='Closing Price: {0:F2}'}" 
+                                            Grid.Column="2" 
+                                            Grid.Row="1" 
+                                            IsVisible="{Binding IsClosed}"/>
+
+                                        <Label 
+                                            Text="{Binding PnLPercent, StringFormat='PnL: {0:F2}%'}" 
+                                            Grid.Column="3" 
+                                            Grid.Row="1" 
+                                            IsVisible="{Binding IsClosed}"/>
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
