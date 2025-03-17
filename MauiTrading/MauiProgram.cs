@@ -34,7 +34,7 @@ namespace MauiTrading
             builder.Services.AddKeyedScoped<Service.IApiService<Models.User>, Service.UserService>("user");
             builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("trade");
             builder.Services.AddKeyedScoped<Service.IApiService<List<Models.Asset>>, Service.AssetService>("asset");
-            builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.TradeService>("register");
+            builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.RegistrationService>("register");
             builder.Services.AddKeyedScoped<Service.IApiService<List<TradeData>>, Service.TradeHistoryService>("tradehistory");
             builder.Services.AddKeyedScoped<Service.IApiService<bool>, Service.CloseTradeService>("closetrade");
 

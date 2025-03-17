@@ -227,6 +227,7 @@ namespace MauiTrading.ViewModel
 
         async Task CloseTrade(TradeData trade)
         {
+            trade.ClosingPrice = trade.PriceNow;
             if (trade != null)
             {
                 var service = _apiServiceFactory.CreateService<bool>("closetrade");

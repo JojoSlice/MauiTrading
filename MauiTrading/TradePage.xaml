@@ -183,8 +183,14 @@
                                             Grid.Row="0"/>
 
                                         <Label 
-                                            Text="{Binding IsLong, StringFormat='Long: {0}'}" 
+                                            Text="Trade direction: Long" 
+                                            IsVisible="{Binding IsLong}"
                                             Grid.Column="1" 
+                                            Grid.Row="0"/>
+                                        <Label
+                                            Text="Trade direction: Short"
+                                            IsVisible="{Binding IsShort}"
+                                            Grid.Column="1"
                                             Grid.Row="0"/>
 
                                         <Button 

@@ -24,6 +24,7 @@ namespace MauiTrading.Models
         public double Price { get; set; }
         public double? PriceNow { get; set; }
         public bool IsLong { get; set; }
+        public bool IsShort => !IsLong;
         public DateTime TradeDate { get; set; } = DateTime.UtcNow;
         public bool IsOpen { get; set; } = true;
         public bool IsClosed => !IsOpen;
