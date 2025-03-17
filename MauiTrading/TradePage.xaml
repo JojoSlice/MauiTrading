@@ -40,6 +40,11 @@
                                 Grid.Row="1"
                                 Grid.ColumnSpan="4">
 
+                    <chart:SfCartesianChart.ZoomPanBehavior>
+                        <chart:ChartZoomPanBehavior EnablePinchZooming="True"
+                                                    EnableDirectionalZooming="True"/>
+                    </chart:SfCartesianChart.ZoomPanBehavior>
+
                     <chart:SfCartesianChart.XAxes>
                         <chart:CategoryAxis>
                             <chart:CategoryAxis.Title>
