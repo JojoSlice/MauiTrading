@@ -198,7 +198,7 @@ namespace MauiTrading.ViewModel
         {
             if (value != null)
             {
-                _ = LoadDataAsync(value);
+                _ = LoadData(value);
             }
         }
 
