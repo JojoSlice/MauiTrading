@@ -65,7 +65,7 @@ namespace MauiTrading.ViewModel
                 }
             }
         }
-        public double SellPrice => SelectedAsset != null ? SelectedAsset.Price - 5 : 0;
+        public double SellPrice => SelectedAsset != null ? SelectedAsset.Price - (SelectedAsset.Price / 200) : 0;
 
         private int _points;
         public int Points
@@ -191,7 +191,7 @@ namespace MauiTrading.ViewModel
         public async Task<Models.User> GetUser()
         {
             var userService = _apiServiceFactory.CreateService<User>("user");
-            return await userService.FetchDataAsync<string>();
+            return await userService.FetchDataAsync<User>();
         }
 
         private void OnSelectedOptionChanged(Models.Asset value)
@@ -217,6 +217,12 @@ namespace MauiTrading.ViewModel
             var trade = BuildTrade(false);
             await SaveTrade(trade);   
             await Shell.Current.DisplayAlert("", "Trade made", "Ok");
+        }
+
+        [RelayCommand]
+        async Task Back()
+        {
+            await Shell.Current.GoToAsync(nameof(HomePage));
         }
 
         async Task CloseTrade(TradeData trade)
@@ -317,14 +323,15 @@ namespace MauiTrading.ViewModel
         public async Task LoadTradeHistory()
         {
             var tradeHistoryData = await _loadTradeHistory.LoadHistory();
+            var tradesInSeason = tradeHistoryData.Where(td => td.SeasonId == _seasonService.Season.Id).ToList();
 
-            if (tradeHistoryData != null && tradeHistoryData.Count >= 0)
+            if (tradesInSeason != null && tradesInSeason.Count >= 0)
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     TradeHistory?.Clear();
 
-                    foreach (var trade in tradeHistoryData)
+                    foreach (var trade in tradesInSeason)
                     {
                         if (trade.IsOpen)
                         {

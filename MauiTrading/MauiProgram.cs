@@ -50,6 +50,8 @@ namespace MauiTrading
             builder.Services.AddTransient<TradePage>();
             builder.Services.AddTransient<TradeViewModel>();
 
+            builder.Services.AddTransient<HistoryPage>();
+            builder.Services.AddTransient<HistoryViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

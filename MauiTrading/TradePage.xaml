@@ -140,6 +140,18 @@
                                 Grid.Column="2"/>
                     </Grid>
                 </Border>
+
+                <Grid ColumnDefinitions="auto, auto, auto"
+                      Margin="5"
+                      Padding="5"
+                      ColumnSpacing="10">
+
+                    <Button Text="Back"
+                            Command="{Binding BackCommand}"
+                            Grid.Column="2"/>
+
+                </Grid>
+
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>

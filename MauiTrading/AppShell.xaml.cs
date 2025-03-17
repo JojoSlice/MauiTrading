@@ -9,6 +9,7 @@
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(TradePage), typeof(TradePage));
+            Routing.RegisterRoute(nameof(HistoryPage), typeof(HistoryPage));
         }
     }
 }

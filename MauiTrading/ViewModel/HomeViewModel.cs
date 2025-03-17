@@ -41,7 +41,7 @@ namespace MauiTrading.ViewModel
         [RelayCommand]
         async Task TradeHistory()
         {
-
+            await Shell.Current.GoToAsync(nameof(HistoryPage));
         }
         
         [RelayCommand]

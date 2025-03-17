@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiTrading.HistoryPage"
+             xmlns:models="clr-namespace:MauiTrading.Models"
+             xmlns:viewmodel="clr-namespace:MauiTrading.ViewModel"
+             x:DataType="viewmodel:HistoryViewModel"
+
+             Title="HistoryPage">
+
+    <ScrollView Background="{StaticResource GradientBrush}"
+                Padding="5"
+                Margin="5">
+       
+         <HorizontalStackLayout>
+                <CollectionView ItemsSource="{Binding TradeHistory}" Margin="5">
+                    <CollectionView.Header>
+                        <Label Text="Trades" FontSize="12" FontAttributes="Bold"/>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TradeData">
+                            <VerticalStackLayout Spacing="5" Padding="1" Margin="5" BackgroundColor="#00000000">
+                                <Border StrokeThickness="1" 
+                    Stroke= "#70808090"
+                    Padding="10" 
+                    Margin="5"
+                    Background="#70808090">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5"/>
+                                    </Border.StrokeShape>
+                                    <Grid 
+                                        RowSpacing="5"
+                                        RowDefinitions="auto, auto" 
+                                        ColumnSpacing="20" 
+                                        ColumnDefinitions="auto, auto, auto, auto">
+
+                                        <Label 
+                                            Text="{Binding Ticker}" 
+                                            Grid.Column="0" 
+                                            Grid.Row="0"/>
+
+                                        <Label 
+                                            Text="{Binding IsLong, StringFormat='Long: {0}'}" 
+                                            Grid.Column="1" 
+                                            Grid.Row="0"/>
+
+                                        <Button 
+                                            Text="Close Trade" 
+                                            Command="{Binding CloseTradeCommand}"
+                                            IsVisible="{Binding IsOpen}"
+                                            Grid.Column="3" 
+                                            Grid.RowSpan="2"/>
+                                    
+                                        <Label 
+                                            Text="{Binding PnLPercent, StringFormat='PnL: {0}'}"
+                                            IsVisible="{Binding IsClosed}"
+                                            Grid.Column="3"
+                                            Grid.Row="2"/>
+                                    
+                                        <Label 
+                                            Text="{Binding Price, StringFormat='Open Price: {0:F2}'}" 
+                                            Grid.Column="0" 
+                                            Grid.Row="1"/>
+
+                                        <Label 
+                                            Text="{Binding PriceNow, StringFormat='Price Now: {0:F2}'}"
+                                            IsVisible="{Binding IsOpen}"
+                                            Grid.Column="1" 
+                                            Grid.Row="1"/>
+                                    
+                                        <Label
+                                            Text="{Binding ClosingPrice, StringFormat='Closing Price: {0:F2}'}"
+                                            IsVisible="{Binding IsClosed}"
+                                            Grid.Column="1"
+                                            Grid.Row="1"/>
+                                        
+                                    
+                                        <Label 
+                                            Text="{Binding TakeProfit, StringFormat='TakeProfit: {0}'}"
+                                            Grid.Column="2"/>
+                                        
+                                        <Label
+                                            Text="{Binding StopLoss, StringFormat='StopLoss: {0}'}"
+                                            Grid.Column="2"
+                                            Grid.Row="1"/>
+
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+             <Grid ColumnDefinitions="auto, auto, auto"
+                      Margin="5"
+                      Padding="5"
+                      ColumnSpacing="10">
+
+                    <Button Text="Back"
+                            Command="{Binding BackCommand}"
+                            Grid.Column="2"/>
+
+                </Grid>
+
+            </HorizontalStackLayout>
+    
+        
+        
+    </ScrollView>
+
+</ContentPage>

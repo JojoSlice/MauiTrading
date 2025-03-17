@@ -23,7 +23,7 @@ namespace MauiTrading.Service
             try
             {
 
-                var response = await _httpClient.GetAsync($"https://localhost:7247/api/trade/tradeseasonalhistory?userId={userId}");
+                var response = await _httpClient.GetAsync($"https://localhost:7247/api/trade/tradehistory?userId={userId}");
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadFromJsonAsync<List<TradeData>>() ?? throw new Exception("TradeData not found");
             }
