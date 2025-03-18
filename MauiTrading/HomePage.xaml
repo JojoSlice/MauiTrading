@@ -53,14 +53,14 @@
                                 <chart:NumericalAxis.Minimum>-1</chart:NumericalAxis.Minimum>
                                     <chart:NumericalAxis.Maximum>1</chart:NumericalAxis.Maximum>
                                     
-                                    <chart:NumericalAxis.LabelStyle>
+                                    <!--<chart:NumericalAxis.LabelStyle>
                                         <chart:ChartAxisLabelStyle LabelFormat="{}{0}%" TextColor="{StaticResource Secondary}"/> 
-                                    </chart:NumericalAxis.LabelStyle>
+                                    </chart:NumericalAxis.LabelStyle>-->
                                     
                                 </chart:NumericalAxis>
                             </chart:SfCartesianChart.YAxes>
                             
-                            <chart:FastLineSeries 
+                            <chart:LineSeries 
                                 ItemsSource="{Binding Data}"
                                 XBindingPath="Date"
                                 YBindingPath="PnL"/>
