@@ -49,9 +49,9 @@
                                         <chart:ChartAxisTitle Text="PnL" TextColor="{StaticResource Secondary}"/>
                                     </chart:NumericalAxis.Title>
 
-                                <chart:NumericalAxis.Interval>1</chart:NumericalAxis.Interval>
-                                <chart:NumericalAxis.Minimum>-1</chart:NumericalAxis.Minimum>
-                                    <chart:NumericalAxis.Maximum>1</chart:NumericalAxis.Maximum>
+                                <chart:NumericalAxis.Interval>10</chart:NumericalAxis.Interval>
+                                <!--<chart:NumericalAxis.Minimum>-1</chart:NumericalAxis.Minimum>-->
+                                    <!--<chart:NumericalAxis.Maximum>1</chart:NumericalAxis.Maximum>-->
                                     
                                     <!--<chart:NumericalAxis.LabelStyle>
                                         <chart:ChartAxisLabelStyle LabelFormat="{}{0}%" TextColor="{StaticResource Secondary}"/> 
