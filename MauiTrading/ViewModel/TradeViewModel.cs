@@ -275,10 +275,6 @@ namespace MauiTrading.ViewModel
             }
         }
         
-        private async Task LoadDataAsync(Models.Asset value)
-        {
-            await LoadData(value);
-        }
         public async Task<List<Models.Asset>> GetTradeOptions()
         {
             var assetService = _apiServiceFactory.CreateService<List<Asset>>("asset");
@@ -286,19 +282,14 @@ namespace MauiTrading.ViewModel
             var result = await assetService.FetchDataAsync<List<Models.Asset>>();
             return result;
         }
+
         public async Task LoadPrice(string ticker)
         {
             var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
             var stock = await stockService.FetchDataAsync(ticker);
             SelectedAsset = stock;
         }
-        public async Task<Double> GetPrice(string ticker)
-        {
-            var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
-            var stock = await stockService.FetchDataAsync(ticker);
 
-            return stock.Price;
-        }
 
         public async Task LoadData(Models.Asset stock)
         {
@@ -320,6 +311,13 @@ namespace MauiTrading.ViewModel
                 });
             }
             IsLoading = false;
+        }
+        public async Task<Double> GetPrice(string ticker)
+        {
+            var stockService = _apiServiceFactory.CreateService<Stock>("stocks");
+            var stock = await stockService.FetchDataAsync(ticker);
+
+            return stock.Price;
         }
         public async Task LoadTradeHistory()
         {
